@@ -19,6 +19,7 @@ import AddOwner from './components/AddOwner.jsx'
 import OwnerBalanceSheet from './components/OwnerBalanceSheet.jsx'
 import AddPayment from './components/AddPayment.jsx'
 import EditExpense from './components/EditExpense.jsx'
+import Settings from './components/Settings.jsx';
 createRoot(document.getElementById('root')).render(
  
     <BrowserRouter>
@@ -39,6 +40,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/owner/balance-sheet/:ownerId" element = {<OwnerBalanceSheet  />} />
         <Route path="/owner/:ownerId/add-payment" element = {<AddPayment  />} />
         <Route path="/trip/:tripId/expense/edit/:expenseId" element = {<EditExpense  />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </BrowserRouter>
 )

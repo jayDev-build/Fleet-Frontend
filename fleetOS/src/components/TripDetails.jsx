@@ -45,6 +45,15 @@ const TripDetails = () => {
     }
   };
 
+  const handleStartTrip = async (id) => {
+    try {
+      await api.patch(`/trip/status/${id}/start`);
+      fetchTripDetails(); // Refresh data to update UI status
+    } catch (err) {
+      alert("Status update failed");
+    }
+  }
+
   const kharche = expenses.map(exp => {
     let config = { label: 'Other', icon: <Receipt className="text-gray-400" /> };
     if (exp.expenseType === 'DIESEL') config = { label: 'Fuel', icon: <Fuel className="text-red-500" /> };
@@ -77,7 +86,7 @@ const TripDetails = () => {
               </button>
               <div className="flex items-center gap-3">
                 <h2 className="text-xl md:text-3xl font-bold text-gray-900">{trip.source} → {trip.destination}</h2>
-                <span className={`text-xs font-bold px-2 py-1 rounded-full uppercase ${trip.status === 'Active' ? 'bg-blue-100 text-blue-600' : 'bg-green-100 text-green-600'}`}>
+                <span className={`text-xs font-bold px-2 py-1 rounded-full uppercase ${trip.status === 'ACTIVE' || trip.status === 'CREATED' ? 'bg-blue-100 text-blue-600' : 'bg-green-100 text-green-600'}`}>
                   {trip.status}
                 </span>
               </div>
@@ -89,20 +98,31 @@ const TripDetails = () => {
             </div>
 
             {/* DESKTOP ACTIONS */}
-            <div className="hidden md:flex gap-3">
-              {trip.status === 'ACTIVE' && (
+            {trip.status === 'ACTIVE' && (
+              <div className="hidden md:flex gap-3">
                 <>
+                {trip.status === 'ACTIVE' && (
                   <button className="bg-white border border-gray-200 px-4 py-2 rounded-lg font-bold text-gray-600 hover:bg-gray-50 transition-all shadow-sm" onClick={() => handleAddExpense(tripId)}>
                     + Kharcha Add Karo
-                  </button> 
-                  <button className="w-1/2 bg-green-600 text-white px-1 py-4 rounded-2xl font-black flex items-center justify-center gap-2 shadow-xl active:scale-95 " onClick={() => handleCompleteTrip(tripId)}>
+                  </button> )}
+                  {trip.status === 'ACTIVE' && (
+                    <button className="w-1/2 bg-green-600 text-white px-1 py-4 rounded-2xl font-black flex items-center justify-center gap-2 shadow-xl active:scale-95 " onClick={() => handleCompleteTrip(tripId)}>
                     <CheckCircle2 size={18} /> Trip Khatam Karo 
-                  </button>
+                  </button>)}
                 </>
+              </div>
               )}
-            </div>
+              {trip.status === 'CREATED' && (
+              <div className="hidden md:flex gap-1">
+                <>
+                  {trip.status === 'CREATED' && (
+                    <button className="w-full bg-green-600 text-white px-1 py-4 rounded-2xl font-black flex items-center justify-center gap-2 shadow-xl active:scale-95 " onClick={() => handleStartTrip(tripId)}>
+                    <CheckCircle2 size={18} /> Trip Shuru Karo 
+                  </button>)}
+                </>
+              </div>
+              )}
           </div>
-
           {/* MOBILE ACTIONS - Logic applied here specifically */}
         </header>
 
@@ -215,6 +235,15 @@ const TripDetails = () => {
               </div>
             </div>
           </div>
+
+          {trip.status === 'CREATED' ? (
+            <div className="flex flex-row gap-2 w-full mt-6 md:hidden">
+              <button className="w-1/2 bg-green-600 text-white px-1 py-4 rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-xl active:scale-95 " onClick={() => handleStartTrip(tripId)}>
+                Trip Shuru Karo
+              </button> 
+            </div>
+          ) : null}
+
           {trip.status === 'ACTIVE' ? (
             <div className="flex flex-row gap-2 w-full mt-6 md:hidden">
               <button className="w-1/2 bg-white border border-gray-200 py-4 rounded-2xl font-black text-gray-600 flex items-center justify-center gap-2 shadow-sm" onClick={() => handleAddExpense(tripId)}>

@@ -107,7 +107,7 @@ useEffect(() => {
           driver: trip.driverName,
           freight: trip.freightPrice,
           profit: trip.profit,
-          status: trip.status === 'ACTIVE' ? 'Active' : 'Completed',
+          status: trip.status,
         }))
       : []; // Fallback to empty array if data isn't ready
 
@@ -190,9 +190,9 @@ useEffect(() => {
                       <td className="px-6 py-4 text-gray-500 text-sm">{trip.truck}</td>
                       <td className="px-6 py-4 text-gray-500 text-sm">{trip.driver}</td>
                       <td className="px-6 py-4 text-gray-800 font-medium">{formatAmount(trip.freight)}</td>
-                      <td className={`px-6 py-4 font-bold ${trip.status === 'Active' ? "text-gray-500" : trip.profit >= 0 ? 'text-green-600' : 'text-red-500'}`}>{formatAmount(trip.profit)}</td>
+                      <td className={`px-6 py-4 font-bold ${trip.status === 'ACTIVE' ? "text-gray-500" : trip.profit >= 0 ? 'text-green-600' : 'text-red-500'}`}>{formatAmount(trip.profit)}</td>
                       <td className="px-6 py-4">
-                        <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase ${trip.status === 'Active' ? 'bg-blue-100 text-blue-600' : 'bg-green-100 text-green-600'}`}>
+                        <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase ${trip.status === 'ACTIVE' || trip.status === 'CREATED' ? 'bg-blue-100 text-blue-600' : 'bg-green-100 text-green-600'}`}>
                           {trip.status}
                         </span>
                       </td>
@@ -216,7 +216,7 @@ useEffect(() => {
                           <h4 className="font-bold text-gray-900">{trip.route}</h4>
                           <p className="text-xs text-gray-500">{trip.truck} • {trip.driver}</p>
                         </div>
-                        <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase ${trip.status === 'Active' ? 'bg-blue-100 text-blue-600' : 'bg-green-100 text-green-600'}`}>
+                        <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase ${trip.status === 'ACTIVE' || trip.status === 'CREATED' ? 'bg-blue-100 text-blue-600' : 'bg-green-100 text-green-600'}`}>
                           {trip.status}
                           </span>
                     </div>
