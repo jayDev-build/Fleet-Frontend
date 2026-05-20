@@ -63,6 +63,7 @@ const AddVehicle = () => {
 
         <button type="submit" className="w-full bg-[#1e293b] text-white py-5 rounded-2xl font-bold text-lg shadow-xl">Gaadi Add Karo</button>
       </form>
+      
     </div>
   );
 };

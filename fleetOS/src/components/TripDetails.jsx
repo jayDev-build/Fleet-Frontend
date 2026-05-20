@@ -14,6 +14,7 @@ const TripDetails = () => {
   const [trip, setTrip] = useState({});
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [expandedId, setExpandedId] = useState(null);
 
   const fetchTripDetails = useCallback(async () => {
     if (!tripId || tripId === 'undefined') return;
@@ -34,12 +35,12 @@ const TripDetails = () => {
   }, [fetchTripDetails]);
 
   const handleAddExpense = (id) => navigate(`/trip/${id}/add-expense`);
-  const handleEditExpense = (expenseId, tripId) => navigate(`/trip/${tripId}/expense/edit/${expenseId}`); 
+  const handleEditExpense = (expenseId, id) => navigate(`/trip/${id}/expense/edit/${expenseId}`); 
 
   const handleCompleteTrip = async (id) => {
     try {
       await api.patch(`/trip/status/${id}/close`);
-      fetchTripDetails(); // Refresh data to update UI status
+      fetchTripDetails(); 
     } catch (err) {
       alert("Status update failed");
     }
@@ -48,11 +49,11 @@ const TripDetails = () => {
   const handleStartTrip = async (id) => {
     try {
       await api.patch(`/trip/status/${id}/start`);
-      fetchTripDetails(); // Refresh data to update UI status
+      fetchTripDetails(); 
     } catch (err) {
       alert("Status update failed");
     }
-  }
+  };
 
   const kharche = expenses.map(exp => {
     let config = { label: 'Other', icon: <Receipt className="text-gray-400" /> };
@@ -100,30 +101,22 @@ const TripDetails = () => {
             {/* DESKTOP ACTIONS */}
             {trip.status === 'ACTIVE' && (
               <div className="hidden md:flex gap-3">
-                <>
-                {trip.status === 'ACTIVE' && (
-                  <button className="bg-white border border-gray-200 px-4 py-2 rounded-lg font-bold text-gray-600 hover:bg-gray-50 transition-all shadow-sm" onClick={() => handleAddExpense(tripId)}>
-                    + Kharcha Add Karo
-                  </button> )}
-                  {trip.status === 'ACTIVE' && (
-                    <button className="w-1/2 bg-green-600 text-white px-1 py-4 rounded-2xl font-black flex items-center justify-center gap-2 shadow-xl active:scale-95 " onClick={() => handleCompleteTrip(tripId)}>
-                    <CheckCircle2 size={18} /> Trip Khatam Karo 
-                  </button>)}
-                </>
+                <button className="bg-white border border-gray-200 px-4 py-2 rounded-lg font-bold text-gray-600 hover:bg-gray-50 transition-all shadow-sm" onClick={() => handleAddExpense(tripId)}>
+                  + Kharcha Add Karo
+                </button> 
+                <button className="bg-green-600 text-white px-6 py-2 rounded-xl font-black flex items-center justify-center gap-2 shadow-xl active:scale-95 transition-all" onClick={() => handleCompleteTrip(tripId)}>
+                  <CheckCircle2 size={18} /> Trip Khatam Karo 
+                </button>
               </div>
-              )}
-              {trip.status === 'CREATED' && (
+            )}
+            {trip.status === 'CREATED' && (
               <div className="hidden md:flex gap-1">
-                <>
-                  {trip.status === 'CREATED' && (
-                    <button className="w-full bg-green-600 text-white px-1 py-4 rounded-2xl font-black flex items-center justify-center gap-2 shadow-xl active:scale-95 " onClick={() => handleStartTrip(tripId)}>
-                    <CheckCircle2 size={18} /> Trip Shuru Karo 
-                  </button>)}
-                </>
+                <button className="bg-green-600 text-white px-6 py-2 rounded-xl font-black flex items-center justify-center gap-2 shadow-xl active:scale-95 transition-all" onClick={() => handleStartTrip(tripId)}>
+                  <CheckCircle2 size={18} /> Trip Shuru Karo 
+                </button>
               </div>
-              )}
+            )}
           </div>
-          {/* MOBILE ACTIONS - Logic applied here specifically */}
         </header>
 
         <div className="px-4 md:px-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -150,7 +143,7 @@ const TripDetails = () => {
                 <InfoRow label="Truck" value={trip.vehicleNumber} />
                 <InfoRow label="Driver" value={trip.driverName} />
                 <InfoRow label="Start Date" value={trip.startDate} />
-                {trip.status === 'Closed' && <InfoRow label="End Date" value={trip.endDate} />}
+                {(trip.status === 'Closed' || trip.status === 'CLOSED') && <InfoRow label="End Date" value={trip.endDate} />}
               </div>
             </div>
           </div>
@@ -167,63 +160,93 @@ const TripDetails = () => {
                 )}
               </div>
               
-              {/* Table wrapper - removed overflow-x-auto to prevent horizontal scrolling */}
               <div className="w-full">
-                <table className="w-full text-left table-fixed"> {/* table-fixed helps control widths */}
+                <table className="w-full text-left table-fixed">
                   <thead className="bg-gray-50 text-[10px] text-gray-400 font-black uppercase tracking-widest">
                     <tr>
-                      <th className="px-4 md:px-6 py-4 w-[40%]">Type/Note</th>
-                      <th className="px-4 md:px-6 py-4 text-right w-[40%]">Amount</th>
-                      <th className="px-4 md:px-6 py-4 text-right w-[40%]">Date</th>
-                      {/* Action column is narrow and fixed to the right */}
-                      {trip.status === 'ACTIVE' && <th className="px-4 py-4 w-[20%]"></th>}
+                      <th className="px-4 md:px-6 py-4 w-[45%]">Type / Note</th>
+                      <th className="px-4 md:px-6 py-4 text-right w-[30%]">Amount</th>
+                      <th className="px-4 md:px-6 py-4 text-right w-[25%]">Date</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-50">
-                    {kharche.map((item) => (  
-                      <tr 
-                        key={item.id} 
-                        className="hover:bg-gray-50 transition-colors cursor-pointer group"
-                        onClick={() => trip.status === 'ACTIVE' && handleEditExpense(item.id, tripId)}
-                      >
-                        {/* Note & Type combined to save horizontal space */}
-                        <td className="px-4 md:px-6 py-4">
-                          <div className="flex items-center gap-2 md:gap-3">
-                            <div className="bg-gray-50 min-w-[32px] h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center border border-gray-100 flex-shrink-0">
-                              {item.icon}
-                            </div>
-                            <div className="truncate">
-                              <p className="font-bold text-gray-800 text-sm  ">{item.note}</p>
-                              <p className="text-[9px] md:text-[10px] text-gray-400 font-black uppercase">{item.type}</p>
-                            </div>
-                          </div>
-                        </td>
-
-                        {/* Amount - moved closer to the left for visibility */}
-                        <td className="px-4 md:px-6 py-4 text-right">
-                          <p className="font-black text-gray-900 text-sm md:text-base">₹{item.amount.toLocaleString('en-IN')}</p>
-                          {/* <p className="text-[9px] text-gray-400 md:hidden">{item.date}</p> */}
-                        </td>
-                        {/* Date of Expense */}
-                        <td className="px-4 md:px-6 py-4 text-right">
-                          <p className="font-black text-gray-900 text-sm md:text-base">₹{item.date}</p>
-                        </td>
-
-                        {/* ACTION: Edit Icon visible on right without scrolling */}
-                        {trip.status === 'ACTIVE' && (
-                          <td className="px-4 py-4 text-right">
-                            <div className="flex justify-end">
-                              <div className="p-1.5 bg-blue-50 text-blue-600 rounded-md group-hover:bg-blue-600 group-hover:text-white transition-all">
-                                <ChevronRight size={14} />
+                    {kharche.map((item) => {
+                      const isExpanded = expandedId === item.id;
+                      return (
+                        <React.Fragment key={item.id}>
+                          {/* Parent Entry Row */}
+                          <tr 
+                            className={`hover:bg-gray-50/80 transition-colors cursor-pointer group ${isExpanded ? 'bg-slate-50' : ''}`}
+                            onClick={() => setExpandedId(isExpanded ? null : item.id)}
+                          >
+                            <td className="px-4 md:px-6 py-4">
+                              <div className="flex items-center gap-2 md:gap-3">
+                                <div className="bg-gray-50 min-w-[32px] h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center border border-gray-100 flex-shrink-0">
+                                  {item.icon}
+                                </div>
+                                <div className="truncate">
+                                  <p className="font-bold text-gray-800 text-sm truncate">{item.note}</p>
+                                  <p className="text-[9px] md:text-[10px] text-gray-400 font-black uppercase tracking-wider">{item.type}</p>
+                                </div>
                               </div>
-                            </div>
-                          </td>
-                        )}
-                      </tr>
-                    ))}
+                            </td>
+
+                            <td className="px-4 md:px-6 py-4 text-right">
+                              <p className="font-black text-gray-900 text-sm md:text-base">₹{item.amount.toLocaleString('en-IN')}</p>
+                            </td>
+
+                            <td className="px-4 md:px-6 py-4 text-right">
+                              <div className="flex items-center justify-end gap-1 text-gray-500 font-bold text-xs md:text-sm">
+                                <span>{item.date}</span>
+                                <ChevronRight size={14} className={`text-gray-300 transition-transform ${isExpanded ? 'rotate-90 text-slate-800' : ''}`} />
+                              </div>
+                            </td>
+                          </tr>
+
+                          {/* Inline Dynamic Description Accordion */}
+                          {isExpanded && (
+                            <tr className="bg-slate-50/50 border-l-4 border-slate-900 animate-in fade-in slide-in-from-top-2 duration-150">
+                              <td colSpan={3} className="px-4 md:px-6 py-4 text-left">
+                                <div className="space-y-3">
+                                  <div>
+                                    <h4 className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Full Note / Details</h4>
+                                    <p className="text-xs md:text-sm font-bold text-slate-800 bg-white p-3.5 rounded-xl border border-slate-100 whitespace-pre-wrap leading-relaxed shadow-sm">
+                                      {item.note || 'No custom description provided for this expense.'}
+                                    </p>
+                                  </div>
+
+                                  <div className="flex items-center justify-between pt-1">
+                                    <div className="flex gap-3 text-[10px] text-slate-400 font-black uppercase tracking-tight">
+                                      <span>Category: <strong className="text-slate-700">{item.type}</strong></span>
+                                      <span>Date: <strong className="text-slate-700">{item.date}</strong></span>
+                                    </div>
+
+                                    {trip.status === 'ACTIVE' && (
+                                      <button 
+                                        onClick={(e) => {
+                                          e.stopPropagation(); // Stops accordion row closure toggles
+                                          handleEditExpense(item.id, tripId);
+                                        }}
+                                        className="px-3.5 py-1.5 bg-[#0f172a] text-white text-[10px] font-black uppercase tracking-wider rounded-lg hover:bg-blue-600 transition-colors shadow-sm active:scale-95"
+                                      >
+                                        Edit Kharcha
+                                      </button>
+                                    )}
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          )}
+                        </React.Fragment>
+                      );
+                    })}
                     
                     {kharche.length === 0 && (
-                      <tr><td colSpan="3" className="text-center py-20 text-gray-400 font-bold italic">No expenses added.</td></tr>
+                      <tr>
+                        <td colSpan={3} className="text-center py-20 text-gray-400 font-bold italic">
+                          No expenses added.
+                        </td>
+                      </tr>
                     )}
                   </tbody>
                 </table>
@@ -236,24 +259,25 @@ const TripDetails = () => {
             </div>
           </div>
 
-          {trip.status === 'CREATED' ? (
+          {/* MOBILE ACTION BUTTONS */}
+          {trip.status === 'CREATED' && (
             <div className="flex flex-row gap-2 w-full mt-6 md:hidden">
-              <button className="w-1/2 bg-green-600 text-white px-1 py-4 rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-xl active:scale-95 " onClick={() => handleStartTrip(tripId)}>
+              <button className="w-full bg-green-600 text-white py-4 rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-xl active:scale-95" onClick={() => handleStartTrip(tripId)}>
                 Trip Shuru Karo
               </button> 
             </div>
-          ) : null}
+          )}
 
-          {trip.status === 'ACTIVE' ? (
+          {trip.status === 'ACTIVE' && (
             <div className="flex flex-row gap-2 w-full mt-6 md:hidden">
               <button className="w-1/2 bg-white border border-gray-200 py-4 rounded-2xl font-black text-gray-600 flex items-center justify-center gap-2 shadow-sm" onClick={() => handleAddExpense(tripId)}>
                 + Kharcha Add Karo
               </button> 
-              <button className="w-1/2 bg-green-600 text-white px-1 py-4 rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-xl active:scale-95 " onClick={() => handleCompleteTrip(tripId)}>
+              <button className="w-1/2 bg-green-600 text-white px-1 py-4 rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-xl active:scale-95" onClick={() => handleCompleteTrip(tripId)}>
                 <CheckCircle2 size={20} /> Trip Khatam Karo
               </button>
             </div>
-          ) : null}
+          )}
         </div>
       </main>
 
@@ -262,7 +286,6 @@ const TripDetails = () => {
   );
 };
 
-// Internal Helper Components
 const HisaabRow = ({ label, amount, isNegative }) => (
   <div className="flex justify-between items-center text-sm">
     <span className="text-gray-500 font-medium">{label}</span>

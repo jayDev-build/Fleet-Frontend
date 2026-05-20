@@ -15,7 +15,7 @@ const sidebarItems = [
   { label: 'Drivers', to: '/allDrivers', icon: <Users size={20} /> },
   { label: 'Owners', to: '/allOwners', icon: <UserSquare2 size={20} /> },
   { label: 'Reports', to: '/reports', icon: <FileText size={20} /> },
-  { label: 'Settings', to: '/settings', icon: <Settings size={20} /> },
+  { label: 'Profile', to: '/profile', icon: <Settings size={20} /> },
 ];
 
 const activeClass = 'bg-white/10 text-white border-l-4 border-orange-500 rounded-l-none';

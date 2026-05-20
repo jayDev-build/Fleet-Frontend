@@ -53,7 +53,7 @@ const AddPayment = () => {
               <div className="flex items-center justify-center text-5xl font-black text-emerald-700">
                 <span className="mr-2">₹</span>
                 <input 
-                  type="number" required placeholder="0"
+                  type="text" required placeholder="0"
                   className="bg-transparent border-none focus:ring-0 w-full max-w-[200px] text-center"
                   value={formData.amount}
                   onChange={(e) => setFormData({...formData, amount: e.target.value})}

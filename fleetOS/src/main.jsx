@@ -40,7 +40,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/owner/balance-sheet/:ownerId" element = {<OwnerBalanceSheet  />} />
         <Route path="/owner/:ownerId/add-payment" element = {<AddPayment  />} />
         <Route path="/trip/:tripId/expense/edit/:expenseId" element = {<EditExpense  />} />
-        <Route path="/settings" element={<Settings />} />
+        <Route path="/profile" element={<Settings />} />
       </Routes>
     </BrowserRouter>
 )
