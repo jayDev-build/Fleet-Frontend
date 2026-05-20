@@ -92,7 +92,7 @@ const AddExpense = () => {
               <div className="relative">
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold">₹</span>
                 <input
-                  type="number"
+                  type="text"
                   required
                   placeholder="0.00"
                   value={formData.amount}
