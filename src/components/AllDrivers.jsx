@@ -3,6 +3,7 @@ import { Search, Plus, User, Phone, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import api from '../service/api';
 import Sidebar from './Sidebar';
+import MobileFooter from './MobileFooter';
 
 const DriverList = () => {
   const [drivers, setDrivers] = useState([]);
@@ -54,6 +55,7 @@ const DriverList = () => {
         }
       </div>
     </div>
+    <MobileFooter activeTab="Drivers" />
     </div>
   );
 };
