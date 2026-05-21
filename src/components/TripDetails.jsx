@@ -98,9 +98,7 @@ const TripDetails = () => {
               </div>
               <div className="flex flex-row gap-2 mt-2 text-gray-500 text-sm md:hidden">
                 <span className="flex items-center gap-1 font-medium">Start: {trip.startDate || 'N/A'}</span>
-                {(trip.status === 'Closed' || trip.status === 'CLOSED') && (
-                  <span className="flex items-center gap-1 font-medium">End: {trip.endDate || 'N/A'}</span>
-                )}
+                <span className="flex items-center gap-1 font-medium">End: {trip.endDate || 'N/A'}</span>
               </div>
             </div>
 
@@ -149,7 +147,7 @@ const TripDetails = () => {
                 <InfoRow label="Truck" value={trip.vehicleNumber} />
                 <InfoRow label="Driver" value={trip.driverName} />
                 <InfoRow label="Start Date" value={trip.startDate} />
-                {(trip.status === 'Closed' || trip.status === 'CLOSED') && <InfoRow label="End Date" value={trip.endDate} />}
+                <InfoRow label="End Date" value={trip.endDate} />
               </div>
             </div>
           </div>
