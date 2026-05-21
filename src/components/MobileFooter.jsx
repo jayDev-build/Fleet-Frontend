@@ -6,6 +6,7 @@ const tabs = [
   { label: 'Home', path: '/dashboard', icon: <Home size={20} /> },
   { label: 'Trips', path: '/allTrips', icon: <Truck size={20} /> },
   { label: 'Vehicles', path: '/allVehicles', icon: <Truck size={20} /> },
+  { label: 'Drivers', path: '/allDrivers', icon: <Users size={20} /> },
   { label: 'Owners', path: '/allOwners', icon: <Users size={20} /> },
   { label: 'Profile', path: '/profile', icon: <UserSquare2 size={20} /> },
 ];
