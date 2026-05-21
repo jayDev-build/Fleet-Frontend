@@ -92,9 +92,11 @@ const TripDetails = () => {
                 </span>
               </div>
               {/* Mobile Info Badges */}
-              <div className="flex flex-col gap-2 mt-2 text-gray-500 text-sm md:hidden">
+              <div className="flex flex-row gap-2 mt-2 text-gray-500 text-sm md:hidden">
                 <span className="flex items-center gap-1 font-medium"><Truck size={14}/> {trip.vehicleNumber}</span>
                 <span className="flex items-center gap-1 font-medium"><User size={14}/> {trip.driverName}</span>
+              </div>
+              <div className="flex flex-row gap-2 mt-2 text-gray-500 text-sm md:hidden">
                 <span className="flex items-center gap-1 font-medium">Start: {trip.startDate || 'N/A'}</span>
                 {(trip.status === 'Closed' || trip.status === 'CLOSED') && (
                   <span className="flex items-center gap-1 font-medium">End: {trip.endDate || 'N/A'}</span>
