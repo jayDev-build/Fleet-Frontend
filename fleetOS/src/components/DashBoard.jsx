@@ -67,7 +67,7 @@ useEffect(() => {
     try {
         const response = await api.get(`/trip/`);
         console.log("Trip details:", response.data);
-        setTripDetails(response.data); // Update state with trip details
+        setTripDetails(response.data.slice(0, 5)); // Update state with trip details
     } catch (err) {
         console.error("Failed to fetch trip details:", err.response?.data || err.message);
     }

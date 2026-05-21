@@ -14,7 +14,6 @@ const sidebarItems = [
   { label: 'Vehicles', to: '/allVehicles', icon: <Truck size={20} className="rotate-180" /> },
   { label: 'Drivers', to: '/allDrivers', icon: <Users size={20} /> },
   { label: 'Owners', to: '/allOwners', icon: <UserSquare2 size={20} /> },
-  { label: 'Reports', to: '/reports', icon: <FileText size={20} /> },
   { label: 'Profile', to: '/profile', icon: <Settings size={20} /> },
 ];
 
