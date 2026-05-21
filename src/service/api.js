@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080/api/v1', // Now you only need to write '/auth/verify' instead of the full path
+  baseURL: import.meta.env.BACKEND_URL, // Now you only need to write '/auth/verify' instead of the full path
 });
 
 // REQUEST INTERCEPTOR: Automatically attach the JWT to every request
