@@ -28,30 +28,6 @@ const Dashboard = () => {
 
 useEffect(() => {
 
-  const verifyToken = async () => {
-    const raw = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('token='))
-      ?.substring('token='.length);
-
-    if (!raw) {
-      return;
-    }
-
-    const formattedToken = decodeURIComponent(raw);
-    console.log("Sending token:", formattedToken); // ✅ log before the request
-
-    try {
-      await api.get('/auth/verify', {
-        headers: { 'Authorization': formattedToken }
-      });
-    setIsValidated(true); // ✅ set validated on success
-    } catch (err) {
-      console.error("Verify failed:", err.response?.status, err.response?.data);
-    navigate('/login'); // ✅ navigate on failure
-    }
-  };
-
   const fetchDashboardData = async () => {
     try {
       const response = await api.get('/user/dashboard');
@@ -73,7 +49,7 @@ useEffect(() => {
     }
   };
 
-    verifyToken();
+    // verifyToken();
     fetchDashboardData();
     fetchTripDetails(); // You can pass a specific tripId if needed   
 
