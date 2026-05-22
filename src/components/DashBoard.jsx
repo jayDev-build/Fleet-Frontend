@@ -21,7 +21,7 @@ import MobileFooter from './MobileFooter';
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const [isValidated, setIsValidated] = useState(false); // New state
+    // const [isValidated, setIsValidated] = useState(false); // New state
     const [dashboardData, setDashboardData] = useState({}); // State to hold dashboard data
     const [tripDetails, setTripDetails] = useState([]); // State for selected trip details
   
@@ -49,7 +49,6 @@ useEffect(() => {
     }
   };
 
-    // verifyToken();
     fetchDashboardData();
     fetchTripDetails(); // You can pass a specific tripId if needed   
 
@@ -59,7 +58,6 @@ useEffect(() => {
         navigate(`/trip/${tripId}`); // Example: navigate to trip details page for trip with ID 1
     }
     // If not validated yet, show nothing or a spinner
-    if (!isValidated) return <div className="bg-[#0f172a] min-h-screen text-white p-10">Verifying session...</div>;
 
     const formatAmount = (value) => {
       if (value == null) return '₹0';
