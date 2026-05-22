@@ -67,9 +67,9 @@ const OwnerBalanceSheet = () => {
                 >
                   <Plus size={20} /> Add Payment
                 </button>
-                <button onClick={sendWhatsApp} className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-3.5 rounded-2xl font-black shadow-xl transition-all active:scale-95">
+                {/* <button onClick={sendWhatsApp} className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-3.5 rounded-2xl font-black shadow-xl transition-all active:scale-95">
                   <MessageCircle size={20} /> WhatsApp
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
@@ -78,8 +78,8 @@ const OwnerBalanceSheet = () => {
         <main className="max-w-7xl w-full mx-auto px-4 md:px-8 -mt-12 space-y-6 flex-1">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <SummaryCard title="Total Freight" amount={owner.totalPay} label="Gross Earnings" color="emerald" />
-            <SummaryCard title="Advance Given" amount={owner.totalAdvance} label="Paid to Owner" color="red" />
-            <SummaryCard title="Net Payable" amount={owner.amountToPay} label="Final Settlement" color="emerald-solid" />
+            <SummaryCard title="Advance Given" amount={owner.totalAdvance} label="Paid to Owner" color="emerald-solid" />
+            <SummaryCard title="Net Payable" amount={owner.amountToPay} label="Final Settlement" color="red" />
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-10">

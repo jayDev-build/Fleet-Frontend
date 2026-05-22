@@ -126,7 +126,7 @@ const AllTrips = () => {
                     <td className="px-6 py-4 font-bold text-gray-900">
                       ₹{trip.freightPrice?.toLocaleString('en-IN')}
                     </td>
-                    <td className="px-6 py-4 font-bold text-green-600">
+                    <td className={`px-6 py-4 font-bold ${trip.status === 'ACTIVE' ? 'text-blue-500' : trip.status === 'CREATED' ? 'text-gray-500' : trip.profit >= 0 ? 'text-green-600' : 'text-red-500'}`}>
                       ₹{trip.profit?.toLocaleString('en-IN')}
                     </td>
                     <td className="px-6 py-4 text-right">
@@ -158,7 +158,7 @@ const AllTrips = () => {
                   </span>
                   <div className="text-right">
                     <p className="font-black text-gray-900 text-base leading-tight">₹{trip.freightPrice?.toLocaleString('en-IN')}</p>
-                    <p className="font-black text-green-600 text-xs">₹{trip.profit?.toLocaleString('en-IN')} Profit</p>
+                    <p className={`font-black ${trip.status === 'ACTIVE' ? 'text-blue-500' : trip.status === 'CREATED' ? 'text-gray-500' : trip.profit >= 0 ? 'text-green-600' : 'text-red-500'} text-xs`}>₹{trip.profit?.toLocaleString('en-IN')} Profit</p>
                   </div>
                 </div>
                 

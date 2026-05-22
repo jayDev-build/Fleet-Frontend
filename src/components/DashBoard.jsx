@@ -70,7 +70,7 @@ useEffect(() => {
       { label: 'ACTIVE TRIPS', value: dashboardData.totalActiveTrips || 0, icon: <RotateCcw className="text-blue-500"  />, color: 'text-gray-800' },
       { label: 'TOTAL FREIGHT', value: dashboardData.totalFreightEarned || 0, icon: <TrendingUp className="text-orange-500" />, color: 'text-gray-800', isCurrency: true },
       { label: 'COMPLETE TRIPS KA PROFIT', value: dashboardData.bookedProfit || 0, icon: <Package className="text-green-500" />, color: 'text-green-600', isCurrency: true },
-      { label: 'CHALTI TRIPS KA PROFIT', value: dashboardData.estimatedProfit || 0, icon: <Package className="text-gray-500" />, color: 'text-gray-600', isCurrency: true },
+      { label: 'CHALTI TRIPS KA PROFIT', value: dashboardData.estimatedProfit || 0, icon: <Package className="text-blue-500" />, color: 'text-blue-500', isCurrency: true },
     ];
 
     const recentTrips = Array.isArray(tripDetails) 
@@ -112,7 +112,7 @@ useEffect(() => {
               <Plus size={18} /> Nayi Trip
             </button>
             <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold border-2 border-white/20">
-              SR
+              {dashboardData.name ? dashboardData.name.charAt(0) : 'U'}
             </div>
           </div>
         </header>
@@ -164,7 +164,7 @@ useEffect(() => {
                       <td className="px-6 py-4 text-gray-500 text-sm">{trip.truck}</td>
                       <td className="px-6 py-4 text-gray-500 text-sm">{trip.driver}</td>  
                       <td className="px-6 py-4 text-gray-800 font-medium">{formatAmount(trip.freight)}</td>
-                      <td className={`px-6 py-4 font-bold ${trip.status === 'ACTIVE' ? "text-gray-500" : trip.profit >= 0 ? 'text-green-600' : 'text-red-500'}`}>{formatAmount(trip.profit)}</td>
+                      <td className={`px-6 py-4 font-bold ${trip.status === 'ACTIVE' ? "text-blue-500" : trip.status === 'CREATED' ? 'text-gray-500' : trip.profit >= 0 ? 'text-green-600' : 'text-red-500'}`}>{formatAmount(trip.profit)}</td>
                       <td className="px-6 py-4">
                         <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase ${trip.status === 'ACTIVE'  ? 'bg-blue-100 text-blue-600' :  trip.status === 'CREATED' ? 'bg-gray-100 text-gray-600' : 'bg-green-100 text-green-600'}`}>
                           {trip.status}
