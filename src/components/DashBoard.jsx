@@ -112,7 +112,7 @@ useEffect(() => {
               <Plus size={18} /> Nayi Trip
             </button>
             <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold border-2 border-white/20">
-              {dashboardData.name ? dashboardData.name.charAt(0) : 'U'}
+              {dashboardData.username ? dashboardData.username.charAt(0) : 'U'}
             </div>
           </div>
         </header>
