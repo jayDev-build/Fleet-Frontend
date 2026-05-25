@@ -77,8 +77,8 @@ const OwnerBalanceSheet = () => {
 
         <main className="max-w-7xl w-full mx-auto px-4 md:px-8 -mt-12 space-y-6 flex-1">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <SummaryCard title="Total Freight" amount={owner.totalPay} label="Gross Earnings" color="emerald" />
-            <SummaryCard title="Advance Given" amount={owner.totalAdvance} label="Paid to Owner" color="emerald-solid" />
+            <SummaryCard title="Total Freight" amount={owner.totalRent} label="Gross Earnings" color="emerald" />
+            <SummaryCard title="Advance Given" amount={owner.totalPaid} label="Paid to Owner" color="emerald-solid" />
             <SummaryCard title="Net Payable" amount={owner.amountToPay} label="Final Settlement" color="red" />
           </div>
 
