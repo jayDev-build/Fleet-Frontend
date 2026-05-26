@@ -15,9 +15,9 @@ const OwnerList = () => {
       try {
         const response = await api.get('/owner/');
         setOwners(response.data);
-        console.log("Owners loaded:", response.data);
+        // console.log("Owners loaded:", response.data);
       } catch (error) {
-        console.error("Owners load failed", error);
+        // console.error("Owners load failed", error);
       } finally {
         setLoading(false);
       }

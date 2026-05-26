@@ -17,7 +17,9 @@ const VehicleList = () => {
         // Guard against non-array structures from backend response arrays
         setVehicles(Array.isArray(res.data) ? res.data : []);
       })
-      .catch(err => console.error("Trucks load failed:", err))
+      .catch(err => {
+        // console.error("Trucks load failed:", err)
+      })
       .finally(() => setLoading(false));
   }, []);
 

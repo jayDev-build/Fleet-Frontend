@@ -14,7 +14,7 @@ const AddVehicle = () => {
   async function loadOwners() {
     const response = await api.get('/owner/');
     setOwners(response.data);
-    console.log("Owners loaded for AddVehicle:", response.data);
+    // console.log("Owners loaded for AddVehicle:", response.data);
   }
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const AddVehicle = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        console.log("Submitting vehicle with data:", formData);
+        // console.log("Submitting vehicle with data:", formData);
       await api.post('/vehicle/', formData);
       navigate('/allVehicles');
     } catch (err) { alert("Vehicle save nahi hua!"); }

@@ -13,7 +13,9 @@ const DriverList = () => {
   useEffect(() => {
     api.get('/driver/')
       .then(res => setDrivers(res.data))
-      .catch(err => console.error("Drivers load failed"))
+      .catch(err => {
+        // console.error("Drivers load failed")
+      })
       .finally(() => setLoading(false));
   }, []);
 

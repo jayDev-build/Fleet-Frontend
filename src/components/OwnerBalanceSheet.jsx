@@ -24,7 +24,7 @@ const OwnerBalanceSheet = () => {
       setTrips(response.data.trips || []);
       setTransactions(transactions_response.data || []);
     } catch (err) {
-      console.error("Failed to load balance sheet:", err.response?.data || err.message);
+      // console.error("Failed to load balance sheet:", err.response?.data || err.message);
     } finally {
       setLoading(false);
     }

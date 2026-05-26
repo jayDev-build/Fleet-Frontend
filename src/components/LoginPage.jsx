@@ -16,7 +16,7 @@ const LoginPage = () => {
   async function handleLogin(e) {
     e.preventDefault();
     // e.stopPropagation(); // Add this just to be safe
-    console.log("Login attempt started...");
+    // console.log("Login attempt started...");
 
     try {
       const loginData = {
@@ -26,18 +26,18 @@ const LoginPage = () => {
 
       const response = await api.post('/auth/login', loginData);
 
-      console.log("Response received:", response.status);
+      // console.log("Response received:", response.status);
 
       if (response.status === 200) {
         // Set the cookie
         document.cookie = `token=${encodeURIComponent('Bearer ' + response.data.jwt)}; path=/;`;
-        console.log("Navigating to dashboard...");
+        // console.log("Navigating to dashboard...");
         
         // 4. Trigger the navigation
         navigate('/dashboard');
       }
     } catch (err) {
-      console.error("Login failed:", err.response?.data || err.message);
+      // console.error("Login failed:", err.response?.data || err.message);
       alert("Login failed! Check console for details.");
     }
   }

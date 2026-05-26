@@ -24,7 +24,7 @@ const TripDetails = () => {
       setTrip(response.data);
       setExpenses(response.data.expenseList || []);
     } catch (err) {
-      console.error("Failed to fetch trip details:", err.response?.data || err.message);
+      // console.error("Failed to fetch trip details:", err.response?.data || err.message);
     } finally {
       setLoading(false);
     }

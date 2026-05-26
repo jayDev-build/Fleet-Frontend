@@ -40,7 +40,7 @@ const Settings = () => {
         setFormData(profile);
         setInitialData(profile);
       } catch (err) {
-        console.error("Failed to fetch profile settings:", err);
+        // console.error("Failed to fetch profile settings:", err);
       } finally {
         setLoading(false);
       }

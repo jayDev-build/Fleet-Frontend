@@ -26,9 +26,9 @@ const AllTrips = () => {
       try {
         const response = await api.get('/trip/'); // Assuming your list endpoint
         setTrips(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       } catch (err) {
-        console.error("Trips load failed:", err);
+        // console.error("Trips load failed:", err);
       } finally {
         setLoading(false);
       }

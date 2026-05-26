@@ -28,9 +28,9 @@ const AddTrip = () => {
       try {
         const res = await api.get('/driver/drivers'); 
         setDrivers(res.data); // Expecting list of { id, name }
-        console.log("Drivers loaded:", res.data);
+        // console.log("Drivers loaded:", res.data);
       } catch (err) {
-        console.error("Drivers load failed");
+        // console.error("Drivers load failed");
       }
     };
     fetchDrivers();
@@ -41,9 +41,9 @@ const AddTrip = () => {
       try {
         const res = await api.get('/vehicle/vehicles');
         setVehicles(res.data); // Expecting list of { id, vehicleNumber, name }
-        console.log("Trucks loaded:", res.data);
+        // console.log("Trucks loaded:", res.data);
       } catch (err) {
-        console.error("Trucks load failed");
+        // console.error("Trucks load failed");
       }
     };
 
@@ -53,7 +53,7 @@ const AddTrip = () => {
   const handleCreateTrip = async (e) => {
     e.preventDefault();
     try {
-        console.log("formdata:",formData)
+        // console.log("formdata:",formData)
       await api.post('/trip/', formData);
       navigate('/dashboard');
     } catch (err) {
@@ -115,7 +115,7 @@ const AddTrip = () => {
                 value={formData.driverId}
                 onChange={(e) =>{ 
                     const val = e.target.value;
-                    console.log("Selected Driver ID:", val);
+                    // console.log("Selected Driver ID:", val);
                     setFormData({...formData, driverId: e.target.value})
                 }}
               >

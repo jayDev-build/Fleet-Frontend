@@ -33,7 +33,7 @@ const AddExpense = () => {
       await api.post(`/expense/`, formData);
       navigate(`/trip/${tripId}`); // Go back to trip details
     } catch (err) {
-      console.error("Save failed:", err);
+      // console.error("Save failed:", err);
       alert("Kharcha save nahi ho paya!");
     }
   };
