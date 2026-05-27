@@ -24,7 +24,7 @@ const Sidebar = () => (
   <aside className="hidden md:flex w-64 bg-[#0f172a] flex-col text-gray-400">
     <div className="p-6">
       <h1 className="text-2xl font-black text-white tracking-tight">
-        TruckKhata<span className="text-orange-500">OS</span>
+        Truck<span className="text-orange-500">Khata</span>
       </h1>
     </div>
 
