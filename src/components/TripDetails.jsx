@@ -82,7 +82,7 @@ const TripDetails = () => {
         <header className="bg-white md:bg-transparent p-4 md:p-8">
           <div className="flex justify-between items-start md:items-center">
             <div>
-              <button onClick={() => navigate(-1)} className="flex items-center text-gray-500 text-sm mb-1 hover:text-gray-800 transition-colors">
+              <button onClick={() => navigate("/alltrips")} className="flex items-center text-gray-500 text-sm mb-1 hover:text-gray-800 transition-colors">
                 <ArrowLeft size={16} className="mr-1" /> Wapas / #{trip.id}
               </button>
               <div className="flex items-center gap-3">

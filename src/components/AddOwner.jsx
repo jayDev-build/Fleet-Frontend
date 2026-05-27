@@ -18,7 +18,7 @@ const AddOwner = () => {
   return (
     <div className="min-h-screen bg-[#0f172a] md:bg-[#f1f5f9] flex flex-col">
       <header className="p-6 text-white md:text-gray-900">
-        <button onClick={() => navigate(-1)} className="text-gray-400 text-sm mb-2 flex items-center"><ArrowLeft size={16}/> Wapas</button>
+        <button onClick={() => navigate("/allOwners")} className="text-gray-400 text-sm mb-2 flex items-center"><ArrowLeft size={16}/> Wapas</button>
         <h1 className="text-3xl font-black">Naya Maalik</h1>
       </header>
       <form onSubmit={handleSubmit} className="flex-1 bg-white rounded-t-[40px] p-8 space-y-6 max-w-2xl mx-auto w-full">

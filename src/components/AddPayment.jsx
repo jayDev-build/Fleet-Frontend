@@ -36,7 +36,7 @@ const AddPayment = () => {
       <div className="flex-1 flex flex-col pb-20 md:pb-0">
         <header className="bg-[#0f172a] text-white p-6 md:p-10 pb-24">
           <div className="max-w-3xl mx-auto">
-            <button onClick={() => navigate(-1)} className="flex items-center text-gray-400 text-xs mb-6 hover:text-white transition-colors">
+            <button onClick={() => navigate(`/owner/balance-sheet/${ownerId}`)} className="flex items-center text-gray-400 text-xs mb-6 hover:text-white transition-colors">
               <ArrowLeft size={14} className="mr-1" /> Wapas Jayein
             </button>
             <h1 className="text-3xl font-black">Nayi Payment Add Karein</h1>

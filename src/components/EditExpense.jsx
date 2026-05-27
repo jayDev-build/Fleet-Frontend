@@ -44,7 +44,7 @@ const EditExpense = () => {
           expenseId: data.expenseId,
         });
       } catch (err) {
-        console.error("Failed to load expense:", err);
+        // console.error("Failed to load expense:", err);
         alert("Expense data load nahi ho paya.");
       } finally {
         setLoading(false);
@@ -88,7 +88,7 @@ const EditExpense = () => {
         <header className="bg-[#0f172a] text-white p-6 md:p-10 pb-24">
           <div className="max-w-2xl mx-auto">
             <div className="flex justify-between items-center mb-6">
-              <button onClick={() => navigate(-1)} className="flex items-center text-gray-400 text-xs hover:text-white transition-colors">
+              <button onClick={() => navigate(`/trip/${tripId}`)} className="flex items-center text-gray-400 text-xs hover:text-white transition-colors">
                 <ArrowLeft size={14} className="mr-1" /> Wapas Jayein
               </button>
               <button 

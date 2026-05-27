@@ -68,7 +68,7 @@ const AddTrip = () => {
         
         {/* Header */}
         <header className="p-6 text-white md:text-gray-800">
-          <button onClick={() => navigate(-1)} className="flex items-center text-gray-400 text-sm mb-2">
+          <button onClick={() => navigate("/alltrips")} className="flex items-center text-gray-400 text-sm mb-2">
             <ArrowLeft size={16} className="mr-1" /> Wapas
           </button>
           <h1 className="text-3xl font-black">Nayi Trip</h1>
