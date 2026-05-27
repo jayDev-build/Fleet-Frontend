@@ -55,7 +55,7 @@ const LoginPage = () => {
               </div>
             </div>
             <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight mb-4">
-              FLEET<span className="text-orange-500">OS</span>
+              Truck<span className="text-orange-500">Khata</span>
             </h1>
             <p className="text-gray-400 text-lg sm:text-xl leading-relaxed max-w-sm">
               India ka pehla fleet management platform jo actually kaam karta hai.

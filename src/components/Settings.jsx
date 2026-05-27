@@ -166,7 +166,7 @@ const Settings = () => {
                   <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl"><ShieldCheck size={20}/></div>
                   <div>
                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">SaaS Subscription</p>
-                    <p className="text-sm font-black text-gray-800">FleetOS Pro Active</p>
+                    <p className="text-sm font-black text-gray-800">TruckKhata Pro Active</p>
                   </div>
                 </div>
                 <div className="text-xs text-gray-500 font-medium bg-slate-50 p-3 rounded-xl">
@@ -182,7 +182,7 @@ const Settings = () => {
                 </div>
                 <p className="text-xs text-slate-300 leading-relaxed font-medium">GST Configuration ya multi-user settings add karne ke liye support team se baat karein.</p>
                 <button type="button" className="text-xs font-black text-white bg-white/10 w-full py-2.5 rounded-xl hover:bg-white/20 transition-all">
-                  Contact FleetOS Helpline
+                  Contact TruckKhata Helpline
                 </button>
               </div> */}
             </div>

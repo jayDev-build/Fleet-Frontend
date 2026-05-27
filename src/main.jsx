@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 // import App from './App.jsx'
 import { BowArrow } from 'lucide-react'
-import FleetOSLogin from './components/LoginPage.jsx'
+import TruckKhataLogin from './components/LoginPage.jsx'
 import Dashboard from './components/DashBoard.jsx'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import TripDetails from './components/TripDetails.jsx'
@@ -24,7 +24,7 @@ createRoot(document.getElementById('root')).render(
  
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<FleetOSLogin />} />
+        <Route path="/login" element={<TruckKhataLogin />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/trip/:tripId" element = {<TripDetails  />} />

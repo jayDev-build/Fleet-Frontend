@@ -2,13 +2,13 @@
 // import reactLogo from './assets/react.svg'
 // import viteLogo from './assets/vite.svg'
 // import heroImg from './assets/hero.png'
-// import FleetOSLogin from './components/LoginPage'
+// import TruckKhataLogin from './components/LoginPage'
 // import './index.css'
 
 // function App() {
 //   return (
 //     <>
-//       <FleetOSLogin />
+//       <TruckKhataLogin />
 //     </>
 //   )
 // }
