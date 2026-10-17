@@ -39,14 +39,14 @@ const VehicleList = () => {
             onClick={() => navigate(-1)} 
             className="flex items-center text-gray-400 md:text-gray-500 text-sm hover:text-white md:hover:text-gray-800 transition-colors"
           >
-            <ArrowLeft size={16} className="mr-1" /> Wapas
+            <ArrowLeft size={16} className="mr-1" /> Back
           </button>
-          <h1 className="text-2xl font-black flex items-center gap-2">Trucks 🚛</h1>
+          <h1 className="text-2xl font-black flex items-center gap-2">Fleet Units & Trucks 🚛</h1>
           <button 
             className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider shadow-lg transition-all active:scale-95" 
             onClick={() => navigate('/addVehicle')}
           >
-            + Add
+            + Add Truck
           </button>
         </header>
 
@@ -57,7 +57,7 @@ const VehicleList = () => {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
             <input 
               type="text" 
-              placeholder="Truck number se dhundo..." 
+              placeholder="Search by unit or truck number..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:bg-white focus:ring-2 focus:ring-blue-500 transition-all font-medium text-sm text-gray-800" 
@@ -66,7 +66,7 @@ const VehicleList = () => {
 
           {/* Conditional Loader / Grid Layout */}
           {loading ? (
-            <div className="text-center py-20 font-bold text-gray-400 animate-pulse italic">Loading Trucks...</div>
+            <div className="text-center py-20 font-bold text-gray-400 animate-pulse italic">Loading Units...</div>
           ) : (
             <div className="space-y-3">
               {filteredVehicles?.map(v => (
@@ -79,7 +79,7 @@ const VehicleList = () => {
                   <div>
                     <h3 className="font-black text-gray-900 text-base uppercase tracking-tight">{v.vehicleNumber}</h3>
                     <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-0.5">
-                      Owner: <span className="text-gray-700 font-bold">{v.ownerName || 'N/A'}</span>
+                      Carrier / Owner: <span className="text-gray-700 font-bold">{v.ownerName || 'N/A'}</span>
                     </p>
                   </div>
                 </div>
@@ -87,7 +87,7 @@ const VehicleList = () => {
 
               {filteredVehicles?.length === 0 && (
                 <div className="text-center py-20 text-gray-400 font-bold italic">
-                  Koi truck nahi mila.
+                  No trucks or power units found.
                 </div>
               )}
             </div>
@@ -96,7 +96,7 @@ const VehicleList = () => {
       </div>
 
       {/* Global Bottom Sheet Navigation on mobile devices */}
-      <MobileFooter activeTab="Vehicles" />
+      <MobileFooter activeTab="Trucks" />
     </div>
   );
 };

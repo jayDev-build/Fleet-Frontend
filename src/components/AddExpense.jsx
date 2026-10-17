@@ -20,10 +20,10 @@ const AddExpense = () => {
   });
 
   const categories = [
-    { id: 'DIESEL', label: 'Diesel', icon: <Fuel size={24} /> },
-    { id: 'TOLL', label: 'Toll', icon: <Landmark size={24} /> },
-    { id: 'DRIVER', label: 'Driver', icon: <User size={24} /> },
-    { id: 'OTHER', label: 'Other', icon: <Wrench size={24} /> },
+    { id: 'DIESEL', label: 'Fuel', icon: <Fuel size={24} /> },
+    { id: 'TOLL', label: 'Tolls', icon: <Landmark size={24} /> },
+    { id: 'DRIVER', label: 'Driver Pay', icon: <User size={24} /> },
+    { id: 'OTHER', label: 'Maintenance', icon: <Wrench size={24} /> },
   ];
 
   const handleSave = async (e) => {
@@ -34,7 +34,7 @@ const AddExpense = () => {
       navigate(`/trip/${tripId}`); // Go back to trip details
     } catch (err) {
       // console.error("Save failed:", err);
-      alert("Kharcha save nahi ho paya!");
+      alert("Failed to save expense!");
     }
   };
 
@@ -48,11 +48,11 @@ const AddExpense = () => {
             onClick={() => navigate(-1)}
             className="flex items-center text-gray-400 text-sm mb-2 hover:text-white md:hover:text-gray-900"
           >
-            <ArrowLeft size={16} className="mr-1" /> Trip Detail
+            <ArrowLeft size={16} className="mr-1" /> Load Details
           </button>
-          <h1 className="text-2xl md:text-3xl font-bold">Kharcha Add Karo</h1>
+          <h1 className="text-2xl md:text-3xl font-bold">Log Trip Expense</h1>
           <p className="text-gray-400 text-xs mt-1 md:text-gray-500 uppercase tracking-wider">
-            Trip #{tripId} | Route ki Jankari
+            Load #{tripId} | Expense Entry
           </p>
         </header>
 
@@ -60,10 +60,10 @@ const AddExpense = () => {
         <div className="flex-1 bg-white rounded-t-[40px] md:rounded-3xl md:m-8 md:shadow-xl p-8 max-w-2xl mx-auto w-full">
           <form onSubmit={handleSave} className="space-y-8">
             
-            {/* KHARCHE KI KISM (Category Selection) */}
+            {/* CATEGORY SELECTION */}
             <div>
               <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">
-                Kharche ki Kism
+                Expense Category
               </label>
               <div className="grid grid-cols-4 gap-3">
                 {categories.map((cat) => (
@@ -84,13 +84,13 @@ const AddExpense = () => {
               </div>
             </div>
 
-            {/* RAQAM (Amount) */}
+            {/* AMOUNT */}
             <div>
               <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">
-                Raqam (Amount)
+                Amount ($)
               </label>
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold">₹</span>
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold">$</span>
                 <input
                   type="text"
                   required
@@ -105,21 +105,21 @@ const AddExpense = () => {
             {/* NOTE */}
             <div>
               <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">
-                Note (Kahan kharcha hua)
+                Description / Vendor Location
               </label>
               <input
                 type="text"
-                placeholder="Ex: NH-176 Indian Oil"
+                placeholder="e.g. Love's Travel Stop #341, I-80"
                 value={formData.note}
                 onChange={(e) => setFormData({ ...formData, note: e.target.value })}
                 className="w-full px-4 py-4 bg-gray-50 border border-gray-100 rounded-xl text-gray-800 outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
-            {/* TARIKH (Date) */}
+            {/* DATE */}
             <div>
               <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">
-                Tarikh
+                Expense Date
               </label>
               <input
                 type="date"
@@ -135,7 +135,7 @@ const AddExpense = () => {
               type="submit"
               className="w-full bg-[#1e293b] hover:bg-black text-white py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 shadow-lg transition-transform active:scale-95"
             >
-              <Save size={20} /> Kharcha Save Karo
+              <Save size={20} /> Save Expense
             </button>
           </form>
         </div>

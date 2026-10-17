@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, 
-  IndianRupee, 
+  DollarSign, 
   Calendar, 
   Notebook, 
   Fuel, 
@@ -45,7 +45,7 @@ const EditExpense = () => {
         });
       } catch (err) {
         // console.error("Failed to load expense:", err);
-        alert("Expense data load nahi ho paya.");
+        alert("Failed to load expense details.");
       } finally {
         setLoading(false);
       }
@@ -67,12 +67,12 @@ const EditExpense = () => {
   };
 
   const handleDelete = async (expenseId) => {
-    if (window.confirm("Kya aap ye kharcha delete karna chahte hain?")) {
+    if (window.confirm("Are you sure you want to delete this expense?")) {
       try {
         await api.delete(`/expense/${expenseId}`);
         navigate(`/trip/${tripId}`);
       } catch (err) {
-        alert("Delete failed.");
+        alert("Failed to delete expense.");
       }
     }
   };
@@ -89,7 +89,7 @@ const EditExpense = () => {
           <div className="max-w-2xl mx-auto">
             <div className="flex justify-between items-center mb-6">
               <button onClick={() => navigate(`/trip/${tripId}`)} className="flex items-center text-gray-400 text-xs hover:text-white transition-colors">
-                <ArrowLeft size={14} className="mr-1" /> Wapas Jayein
+                <ArrowLeft size={14} className="mr-1" /> Back
               </button>
               <button 
                 onClick={() => handleDelete(expenseId)}
@@ -98,8 +98,8 @@ const EditExpense = () => {
                 <Trash2 size={14} /> Delete
               </button>
             </div>
-            <h1 className="text-3xl font-black">Kharcha Edit Karein</h1>
-            <p className="text-gray-400 mt-2 italic text-sm">Trip ID: #{tripId}</p>
+            <h1 className="text-3xl font-black">Edit Expense</h1>
+            <p className="text-gray-400 mt-2 italic text-sm">Load ID: #{tripId}</p>
           </div>
         </header>
 
@@ -109,9 +109,9 @@ const EditExpense = () => {
             
             {/* Amount Field */}
             <div className="bg-blue-50 p-6 rounded-3xl border border-blue-100 text-center">
-              <label className="text-[10px] font-black text-blue-600 uppercase mb-2 block tracking-widest">Kharche ki Amount</label>
+              <label className="text-[10px] font-black text-blue-600 uppercase mb-2 block tracking-widest">Expense Amount</label>
               <div className="flex items-center justify-center text-4xl font-black text-blue-700">
-                <span className="mr-1">₹</span>
+                <span className="mr-1">$</span>
                 <input 
                   type="number" required
                   className="bg-transparent border-none focus:ring-0 w-40 text-center"
@@ -123,22 +123,22 @@ const EditExpense = () => {
 
             {/* Type Selector */}
             <div className="space-y-3">
-              <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Kharche ka Type</label>
+              <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Expense Category</label>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <TypeBtn 
                   active={formData.expenseType === 'DIESEL'} 
                   onClick={() => setFormData({...formData, expenseType: 'DIESEL'})}
-                  icon={<Fuel size={16}/>} label="Diesel" 
+                  icon={<Fuel size={16}/>} label="Fuel" 
                 />
                 <TypeBtn 
                   active={formData.expenseType === 'DRIVER'} 
                   onClick={() => setFormData({...formData, expenseType: 'DRIVER'})}
-                  icon={<User size={16}/>} label="Driver" 
+                  icon={<User size={16}/>} label="Driver Pay" 
                 />
                 <TypeBtn 
                   active={formData.expenseType === 'REPAIR'} 
                   onClick={() => setFormData({...formData, expenseType: 'REPAIR'})}
-                  icon={<Wrench size={16}/>} label="Repair" 
+                  icon={<Wrench size={16}/>} label="Maintenance" 
                 />
                 <TypeBtn 
                   active={formData.expenseType === 'OTHER'} 
@@ -167,7 +167,7 @@ const EditExpense = () => {
                 <div className="relative">
                   <Notebook className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                   <input 
-                    type="text" placeholder="e.g. Tank full karwaya"
+                    type="text" placeholder="e.g. Full fuel fill-up, DEF fluid"
                     className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none font-bold text-gray-800"
                     value={formData.note}
                     onChange={(e) => setFormData({...formData, note: e.target.value})}

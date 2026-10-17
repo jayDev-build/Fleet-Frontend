@@ -57,7 +57,7 @@ const AddTrip = () => {
       await api.post('/trip/', formData);
       navigate('/dashboard');
     } catch (err) {
-      alert("Trip banane mein galti hui!");
+      alert("Failed to create load! Please check all required fields.");
     }
   };
 
@@ -69,32 +69,32 @@ const AddTrip = () => {
         {/* Header */}
         <header className="p-6 text-white md:text-gray-800">
           <button onClick={() => navigate("/alltrips")} className="flex items-center text-gray-400 text-sm mb-2">
-            <ArrowLeft size={16} className="mr-1" /> Wapas
+            <ArrowLeft size={16} className="mr-1" /> Back
           </button>
-          <h1 className="text-3xl font-black">Nayi Trip</h1>
+          <h1 className="text-3xl font-black">Dispatch New Load</h1>
         </header>
 
         <form onSubmit={handleCreateTrip} className="flex-1 bg-white rounded-t-[40px] md:rounded-3xl p-6 md:p-8 space-y-6 md:mb-10 shadow-2xl">
           
           {/* SECTION: ROUTE */}
-          <FormSection title="Route">
-            <InputField label="Kahan Se" placeholder="Delhi" value={formData.source} 
+          <FormSection title="Route & Destinations">
+            <InputField label="Origin / Pickup" placeholder="Chicago, IL" value={formData.source} 
               onChange={(v) => setFormData({...formData, source: v})} />
-            <InputField label="Kahan Tak" placeholder="Mumbai" value={formData.destination} 
+            <InputField label="Destination / Dropoff" placeholder="Dallas, TX" value={formData.destination} 
               onChange={(v) => setFormData({...formData, destination: v})} />
           </FormSection>
 
           {/* SECTION: TRUCK & DRIVER */}
-          <FormSection title="Truck & Driver">
+          <FormSection title="Power Unit & Driver">
             <div>
-              <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Truck Number</label>
+              <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Truck / Unit Number</label>
               <select
                 required
                 className="w-full px-4 py-4 bg-gray-50 border border-gray-100 rounded-xl text-gray-800 outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
                 value={formData.vehicleNumber}
                 onChange={(e) => setFormData({ ...formData, vehicleNumber: e.target.value })}
               >
-                <option value="">Truck Select Karein</option>
+                <option value="">Select Truck / Unit</option>
                 {vehicles.map((v) => (
                   <option
                     key={v.vehicleId }
@@ -108,7 +108,7 @@ const AddTrip = () => {
 
             {/* DRIVER SELECTION (The ID Problem Fix) */}
             <div>
-              <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Driver</label>
+              <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Assigned Driver</label>
               <select 
                 required
                 className="w-full px-4 py-4 bg-gray-50 border border-gray-100 rounded-xl text-gray-800 outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
@@ -119,7 +119,7 @@ const AddTrip = () => {
                     setFormData({...formData, driverId: e.target.value})
                 }}
               >
-                <option value="">Driver Select Karein</option>
+                <option value="">Select Driver</option>
                 {drivers.map(d => (
                   <option key={d.driverId} value={d.driverId}>{d.driverName}</option>
                 ))}
@@ -127,26 +127,26 @@ const AddTrip = () => {
             </div>
           </FormSection>
 
-          {/* SECTION: PAISA */}
-          <FormSection title="Paisa">
-            <InputField label="Maal Ka Kiraya" placeholder="1,50,000" type="number" icon="₹"
+          {/* SECTION: RATES */}
+          <FormSection title="Rate & Carrier Settlement">
+            <InputField label="Shipper Freight Rate (Gross)" placeholder="3500" type="number" icon="$"
               value={formData.freightPrice} onChange={(v) => setFormData({...formData, freightPrice: v})} />
-            <InputField label="Truck Bhada (Owner Ko)" placeholder="75,000" type="number" icon="₹"
+            <InputField label="Carrier / Owner-Operator Rate" placeholder="2800" type="number" icon="$"
               value={formData.ownerRate} onChange={(v) => setFormData({...formData, ownerRate: v})} />
           </FormSection>
 
           {/* SECTION: DATES */}
-          <FormSection title="Dates">
+          <FormSection title="Schedule">
             <div className="grid grid-cols-2 gap-4">
-              <InputField label="Shuru" type="date" value={formData.startDate} 
+              <InputField label="Pickup Date" type="date" value={formData.startDate} 
                 onChange={(v) => setFormData({...formData, startDate: v})} />
-              <InputField label="Khatam" type="date" value={formData.endDate} 
+              <InputField label="Delivery Date" type="date" value={formData.endDate} 
                 onChange={(v) => setFormData({...formData, endDate: v})} />
             </div>
           </FormSection>
 
           <button type="submit" className="w-full bg-[#1e293b] text-white py-5 rounded-2xl font-bold text-lg shadow-xl active:scale-95 transition-transform">
-            Trip Banao →
+            Dispatch Load →
           </button>
         </form>
       </div>

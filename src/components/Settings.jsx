@@ -62,7 +62,7 @@ const Settings = () => {
       setInitialData(formData); // Update backup reference
       setIsEditable(false);
     } catch (err) {
-      alert("Settings save nahi ho payi. Please try again.");
+      alert("Failed to save settings. Please try again.");
     } finally {
       setSaving(false);
     }
@@ -81,7 +81,7 @@ const Settings = () => {
           <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
               <h1 className="text-3xl font-black tracking-tight">Account Settings</h1>
-              <p className="text-gray-400 text-sm mt-1">Apni company ki details aur business profile manage karein.</p>
+              <p className="text-gray-400 text-sm mt-1">Manage your carrier identity, dispatcher profile, and operating locations.</p>
             </div>
             
             {!isEditable && (
@@ -103,24 +103,24 @@ const Settings = () => {
             <div className="lg:col-span-2 bg-white rounded-[2.5rem] shadow-xl border border-gray-100 p-6 md:p-8 space-y-6">
               <div className="border-b border-gray-50 pb-4">
                 <h3 className="font-black text-gray-900 text-lg">Business Identity</h3>
-                <p className="text-gray-400 text-xs mt-0.5">This information will reflect on your generated reports & ledger bills.</p>
+                <p className="text-gray-400 text-xs mt-0.5">This information will reflect on your generated rate confirmations & settlements.</p>
               </div>
 
               {/* Company & Owner Name */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <SettingsInput 
-                  label="Company Name" icon={<Building2 size={16}/>} disabled={!isEditable} placeholder="e.g. Shri Ram Movers"
+                  label="Company Name" icon={<Building2 size={16}/>} disabled={!isEditable} placeholder="e.g. Apex Freight Logistics"
                   value={formData.companyName} onChange={(e) => setFormData({...formData, companyName: e.target.value})}
                 />
                 <SettingsInput 
-                  label="Owner Name" icon={<User size={16}/>} disabled={!isEditable} placeholder="Yashit Jain"
+                  label="Owner Name" icon={<User size={16}/>} disabled={!isEditable} placeholder="e.g. John Miller"
                   value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})}
                 />
               </div>
 
               {/* Phone Number */}
               <SettingsInput 
-                label="Registered Phone Number" icon={<Phone size={16}/>} disabled={!isEditable} placeholder="989012345" type="tel"
+                label="Registered Phone Number" icon={<Phone size={16}/>} disabled={!isEditable} placeholder="(555) 123-4567" type="tel"
                 value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})}
               />
 
@@ -129,11 +129,11 @@ const Settings = () => {
                 <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1 mb-2">Operating Location</label>
                 <div className="grid grid-cols-2 gap-4 bg-gray-50 p-4 rounded-2xl border border-gray-100">
                   <SettingsInput 
-                    label="City" icon={<MapPin size={16}/>} disabled={!isEditable} placeholder="e.g. New Delhi" bgWhite
+                    label="City" icon={<MapPin size={16}/>} disabled={!isEditable} placeholder="e.g. Chicago" bgWhite
                     value={formData.city} onChange={(e) => setFormData({...formData, city: e.target.value})}
                   />
                   <SettingsInput 
-                    label="State" icon={<MapPin size={16}/>} disabled={!isEditable} placeholder="e.g. Delhi" bgWhite
+                    label="State" icon={<MapPin size={16}/>} disabled={!isEditable} placeholder="e.g. IL" bgWhite
                     value={formData.state} onChange={(e) => setFormData({...formData, state: e.target.value})}
                   />
                 </div>
@@ -166,11 +166,11 @@ const Settings = () => {
                   <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl"><ShieldCheck size={20}/></div>
                   <div>
                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">SaaS Subscription</p>
-                    <p className="text-sm font-black text-gray-800">TruckKhata Pro Active</p>
+                    <p className="text-sm font-black text-gray-800">TruckDispatch Pro Active</p>
                   </div>
                 </div>
                 <div className="text-xs text-gray-500 font-medium bg-slate-50 p-3 rounded-xl">
-                  Aapki company details completely safe and cloud-synced hain.
+                  Your company and dispatch data is secure and cloud-synced.
                 </div>
               </div>
 

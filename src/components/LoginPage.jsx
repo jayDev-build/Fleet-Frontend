@@ -8,7 +8,7 @@ const LoginPage = () => {
   const navigate = useNavigate(); // 1. Move navigate to the top level of the component
   
   const [forsmata, setForsmata] = useState({
-    username: 'Shri Ram Movers',
+    username: 'Apex Freight Logistics',
     password: 'password123',
   });
 
@@ -38,7 +38,7 @@ const LoginPage = () => {
       }
     } catch (err) {
       // console.error("Login failed:", err.response?.data || err.message);
-      alert("Login failed! Check console for details.");
+      alert("Login failed! Please check your credentials.");
     }
   }
 
@@ -55,17 +55,17 @@ const LoginPage = () => {
               </div>
             </div>
             <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight mb-4">
-              Truck<span className="text-orange-500">Khata</span>
+              Truck<span className="text-orange-500">Dispatch</span>
             </h1>
             <p className="text-gray-400 text-lg sm:text-xl leading-relaxed max-w-sm">
-              India ka pehla fleet management platform jo actually kaam karta hai.
+              The modern fleet dispatch and carrier management platform built for US dispatchers.
             </p>
           </div>
 
           <div className="hidden sm:block bg-[#1e293b]/50 border border-white/5 p-6 rounded-2xl backdrop-blur-sm">
             <div className="flex items-center gap-3 mb-3">
               <Star className="text-yellow-500 fill-yellow-500 w-5 h-5" />
-              <span className="text-gray-300 font-medium">500+ Fleet Operators trust us</span>
+              <span className="text-gray-300 font-medium">500+ Dispatchers & Carriers trust us</span>
             </div>
           </div>
         </div>
@@ -74,7 +74,7 @@ const LoginPage = () => {
         <div className="w-full sm:w-1/2 bg-white sm:bg-[#f8fafc] p-8 sm:p-16 flex flex-col justify-center rounded-t-[40px] sm:rounded-none -mt-10 sm:mt-0 z-10">
           <div className="max-w-sm w-full mx-auto">
             <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] mb-8">
-              Apna account login karein
+              Sign In to Dispatch Portal
             </h2>
 
             <form className="space-y-6" onSubmit={handleLogin}>
@@ -105,7 +105,7 @@ const LoginPage = () => {
               </div>
 
               <button type="submit" className="w-full bg-[#0f172a] hover:bg-[#1e293b] text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-all transform active:scale-[0.98]">
-                Login Karein <ArrowRight size={20} />
+                Sign In <ArrowRight size={20} />
               </button>
             </form>
           </div>

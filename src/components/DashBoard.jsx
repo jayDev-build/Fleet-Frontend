@@ -33,19 +33,19 @@ useEffect(() => {
       const response = await api.get('/user/dashboard');
       const responsedata = response.data;
       setDashboardData(responsedata); // ✅ update state with fetched data
-      console.log("Dashboard data:", response.data); // ✅ log the fetched data
+      // console.log("Dashboard data:", response.data); // ✅ log the fetched data
     } catch (err) {
-      console.error("Failed to fetch dashboard data:", err.response?.data || err.message);
+      // console.error("Failed to fetch dashboard data:", err.response?.data || err.message);
     }
   };
 
   const fetchTripDetails = async () => {
     try {
         const response = await api.get(`/trip/`);
-        console.log("Trip details:", response.data);
+        // console.log("Trip details:", response.data);
         setTripDetails(response.data.slice(0, 5)); // Update state with trip details
     } catch (err) {
-        console.error("Failed to fetch trip details:", err.response?.data || err.message);
+        // console.error("Failed to fetch trip details:", err.response?.data || err.message);
     }
   };
 
@@ -60,17 +60,17 @@ useEffect(() => {
     // If not validated yet, show nothing or a spinner
 
     const formatAmount = (value) => {
-      if (value == null) return '₹0';
+      if (value == null) return '$0';
       const absValue = Math.abs(value);
-      return `${value < 0 ? '- ' : ''}₹${absValue.toLocaleString('en-IN')}`;
+      return `${value < 0 ? '- ' : ''}$${absValue.toLocaleString('en-US')}`;
     };
 
     const stats = [
-      { label: 'TOTAL TRIPS', value: dashboardData.totalTrips || 0, icon: <Truck className="text-gray-400" />, color: 'text-gray-800' },
-      { label: 'ACTIVE TRIPS', value: dashboardData.totalActiveTrips || 0, icon: <RotateCcw className="text-blue-500"  />, color: 'text-gray-800' },
-      { label: 'TOTAL FREIGHT', value: dashboardData.totalFreightEarned || 0, icon: <TrendingUp className="text-orange-500" />, color: 'text-gray-800', isCurrency: true },
-      { label: 'COMPLETE TRIPS KA PROFIT', value: dashboardData.bookedProfit || 0, icon: <Package className="text-green-500" />, color: 'text-green-600', isCurrency: true },
-      { label: 'CHALTI TRIPS KA PROFIT', value: dashboardData.estimatedProfit || 0, icon: <Package className="text-blue-500" />, color: 'text-blue-500', isCurrency: true },
+      { label: 'TOTAL LOADS', value: dashboardData.totalTrips || 0, icon: <Truck className="text-gray-400" />, color: 'text-gray-800' },
+      { label: 'ACTIVE LOADS', value: dashboardData.totalActiveTrips || 0, icon: <RotateCcw className="text-blue-500"  />, color: 'text-gray-800' },
+      { label: 'TOTAL FREIGHT REVENUE', value: dashboardData.totalFreightEarned || 0, icon: <TrendingUp className="text-orange-500" />, color: 'text-gray-800', isCurrency: true },
+      { label: 'DELIVERED LOADS PROFIT', value: dashboardData.bookedProfit || 0, icon: <Package className="text-green-500" />, color: 'text-green-600', isCurrency: true },
+      { label: 'ACTIVE LOADS PROFIT', value: dashboardData.estimatedProfit || 0, icon: <Package className="text-blue-500" />, color: 'text-blue-500', isCurrency: true },
     ];
 
     const recentTrips = Array.isArray(tripDetails) 
@@ -100,16 +100,16 @@ useEffect(() => {
         <header className="bg-[#0f172a] md:bg-white p-6 md:px-8 md:py-4 flex justify-between items-center">
           <div className="text-white md:text-[#0f172a]">
             <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
-              <span className="md:hidden">Namaste, Shri Ram 🙏</span>
+              <span className="md:hidden">Welcome, {dashboardData.username || 'Dispatcher'} 👋</span>
               <span className="hidden md:block text-gray-800">Dashboard</span>
             </h2>
-            <p className="text-sm text-gray-400 md:hidden">May 2026 ka overview</p>
+            <p className="text-sm text-gray-400 md:hidden">Fleet Operations Overview</p>
           </div>
           <div className="flex items-center gap-3">
             <button className="hidden md:flex items-center gap-2 bg-[#0f172a] text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-slate-800 transition-all"
                 onClick={() => navigate('/create-trip')}
             >
-              <Plus size={18} /> Nayi Trip
+              <Plus size={18} /> New Load
             </button>
             <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold border-2 border-white/20">
               {dashboardData.username ? dashboardData.username.charAt(0) : 'U'}
@@ -137,9 +137,9 @@ useEffect(() => {
           {/* RECENT TRIPS SECTION */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
             <div className="p-6 border-b border-gray-50 flex justify-between items-center">
-              <h3 className="font-bold text-gray-800 text-lg">Recent Trips</h3>
+              <h3 className="font-bold text-gray-800 text-lg">Recent Loads</h3>
               <button className="text-blue-600 text-sm font-semibold hover:underline" onClick={() => navigate('/allTrips')}>
-                Sab dekho
+                View All
               </button>
             </div>
 
@@ -172,7 +172,7 @@ useEffect(() => {
                       </td>
                       <td className="px-6 py-4">
                         <button className="bg-[#0f172a] text-white px-4 py-1.5 rounded-lg text-xs font-bold" onClick={() => handleTripDetail(trip.id)}>
-                          Dekho
+                          View
                         </button>
                       </td>
                     </tr>
@@ -198,20 +198,20 @@ useEffect(() => {
                 <div className="flex justify-between items-center mt-4">
                     <div>
                     <p className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Freight</p>
-                    <p className="font-bold text-gray-900">₹{trip.freight.toLocaleString('en-IN')}</p>
+                    <p className="font-bold text-gray-900">${(trip.freight || 0).toLocaleString('en-US')}</p>
                     </div>
                     
-                    {/* THE MOBILE DEKHO BUTTON */}
+                    {/* THE MOBILE VIEW BUTTON */}
                     <button 
                     onClick={() => navigate(`/trip/${trip.id}`)}
                     className="bg-[#0f172a] text-white px-6 py-2 rounded-lg text-sm font-bold flex items-center gap-2 active:scale-95 transition-transform"
                     >
-                    Dekho
+                    View Details
                     </button>
                 </div>
                 </div>
-  ))}
-</div>
+              ))}
+            </div>
           </div>
         </div>
       </main>

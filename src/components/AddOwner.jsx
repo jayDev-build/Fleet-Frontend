@@ -12,26 +12,26 @@ const AddOwner = () => {
     try {
       await api.post('/owner/', formData);
       navigate('/allOwners');
-    } catch (err) { alert("Maalik ki detail save nahi hui!"); }
+    } catch (err) { alert("Failed to save carrier / owner details!"); }
   };
 
   return (
     <div className="min-h-screen bg-[#0f172a] md:bg-[#f1f5f9] flex flex-col">
       <header className="p-6 text-white md:text-gray-900">
-        <button onClick={() => navigate("/allOwners")} className="text-gray-400 text-sm mb-2 flex items-center"><ArrowLeft size={16}/> Wapas</button>
-        <h1 className="text-3xl font-black">Naya Maalik</h1>
+        <button onClick={() => navigate("/allOwners")} className="text-gray-400 text-sm mb-2 flex items-center"><ArrowLeft size={16}/> Back</button>
+        <h1 className="text-3xl font-black">Add Carrier / Owner-Operator</h1>
       </header>
       <form onSubmit={handleSubmit} className="flex-1 bg-white rounded-t-[40px] p-8 space-y-6 max-w-2xl mx-auto w-full">
         <div className="space-y-4">
-          <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest">Maalik ka Naam</label>
-          <input required className="w-full px-4 py-4 bg-gray-50 border border-gray-100 rounded-xl" placeholder="Suresh Patel" 
+          <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest">Carrier / Owner Name</label>
+          <input required className="w-full px-4 py-4 bg-gray-50 border border-gray-100 rounded-xl" placeholder="e.g. Swift Haul Logistics or John Miller" 
             onChange={e => setFormData({...formData, name: e.target.value})} />
           
           <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest">Phone Number</label>
-          <input required type="tel" className="w-full px-4 py-4 bg-gray-50 border border-gray-100 rounded-xl" placeholder="98980 12345" 
+          <input required type="tel" className="w-full px-4 py-4 bg-gray-50 border border-gray-100 rounded-xl" placeholder="(555) 234-5678" 
             onChange={e => setFormData({...formData, phone: e.target.value})} />
         </div>
-        <button className="w-full bg-orange-500 text-white py-5 rounded-2xl font-bold text-lg shadow-lg">Maalik Add Karo</button>
+        <button className="w-full bg-orange-500 text-white py-5 rounded-2xl font-bold text-lg shadow-lg">Save Carrier Profile</button>
       </form>
     </div>
   );

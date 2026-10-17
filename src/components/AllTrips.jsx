@@ -56,16 +56,16 @@ const AllTrips = () => {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <button onClick={() => navigate(-1)} className="flex items-center text-gray-500 text-sm mb-1 hover:text-gray-800 transition-colors">
-                <ArrowLeft size={16} className="mr-1" /> Wapas
+                <ArrowLeft size={16} className="mr-1" /> Back
               </button>
-              <h1 className="text-2xl md:text-3xl font-black text-[#0f172a]">Saare Trips</h1>
-              <p className="text-gray-500 text-sm">Apne poore fleet ki history dekhein</p>
+              <h1 className="text-2xl md:text-3xl font-black text-[#0f172a]">All Dispatches</h1>
+              <p className="text-gray-500 text-sm">View and manage complete dispatch history</p>
             </div>
             <button 
               onClick={() => navigate('/create-trip')}
               className="bg-[#0f172a] text-white px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all"
             >
-              <Plus size={20} /> Naya Trip Shuru Karo
+              <Plus size={20} /> Dispatch New Load
             </button>
           </div>
 
@@ -75,7 +75,7 @@ const AllTrips = () => {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
               <input 
                 type="text"
-                placeholder="Gadi number ya destination se search karein..."
+                placeholder="Search by truck #, destination, or driver..."
                 className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -93,8 +93,8 @@ const AllTrips = () => {
               <thead className="bg-gray-50 text-[11px] font-bold text-gray-400 uppercase tracking-widest">
                 <tr>
                   <th className="px-6 py-4">Route</th>
-                  <th className="px-6 py-4">Gadi / Driver</th>
-                  <th className="px-6 py-4">Tarik</th>
+                  <th className="px-6 py-4">Truck / Driver</th>
+                  <th className="px-6 py-4">Date</th>
                   <th className="px-6 py-4">Status</th>
                   <th className="px-6 py-4">Freight</th>
                   <th className="px-6 py-4">Profit</th>
@@ -115,7 +115,7 @@ const AllTrips = () => {
                     </td>
                     <td className="px-6 py-4">
                       <div className="text-sm text-gray-600 flex items-center gap-1">
-                        <Calendar size={14} /> {trip.startDate || '12 May 2026'}
+                        <Calendar size={14} /> {trip.startDate || 'May 12, 2026'}
                       </div>
                     </td>
                     <td className="px-6 py-4">
@@ -124,10 +124,10 @@ const AllTrips = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 font-bold text-gray-900">
-                      ₹{trip.freightPrice?.toLocaleString('en-IN')}
+                      ${(trip.freightPrice || 0).toLocaleString('en-US')}
                     </td>
                     <td className={`px-6 py-4 font-bold ${trip.status === 'ACTIVE' ? 'text-blue-500' : trip.status === 'CREATED' ? 'text-gray-500' : trip.profit >= 0 ? 'text-green-600' : 'text-red-500'}`}>
-                      ₹{trip.profit?.toLocaleString('en-IN')}
+                      ${(trip.profit || 0).toLocaleString('en-US')}
                     </td>
                     <td className="px-6 py-4 text-right">
                       <button 
@@ -157,8 +157,8 @@ const AllTrips = () => {
                     {trip.status}
                   </span>
                   <div className="text-right">
-                    <p className="font-black text-gray-900 text-base leading-tight">₹{trip.freightPrice?.toLocaleString('en-IN')}</p>
-                    <p className={`font-black ${trip.status === 'ACTIVE' ? 'text-blue-500' : trip.status === 'CREATED' ? 'text-gray-500' : trip.profit >= 0 ? 'text-green-600' : 'text-red-500'} text-xs`}>₹{trip.profit?.toLocaleString('en-IN')} Profit</p>
+                    <p className="font-black text-gray-900 text-base leading-tight">${(trip.freightPrice || 0).toLocaleString('en-US')}</p>
+                    <p className={`font-black ${trip.status === 'ACTIVE' ? 'text-blue-500' : trip.status === 'CREATED' ? 'text-gray-500' : trip.profit >= 0 ? 'text-green-600' : 'text-red-500'} text-xs`}>${(trip.profit || 0).toLocaleString('en-US')} Profit</p>
                   </div>
                 </div>
                 
@@ -181,11 +181,11 @@ const AllTrips = () => {
                   {/* --- NEW DATE SECTION --- */}
                   <div className="text-right flex flex-col justify-between h-10 border-l border-gray-50 pl-4">
                     <div>
-                      <p className="text-[9px] font-bold text-gray-400 uppercase leading-none">Start</p>
-                      <p className="text-[11px] font-black text-gray-700">{trip.startDate || '11 May'}</p>
+                      <p className="text-[9px] font-bold text-gray-400 uppercase leading-none">Pickup</p>
+                      <p className="text-[11px] font-black text-gray-700">{trip.startDate || 'May 11'}</p>
                     </div>
                     <div className="mt-1">
-                      <p className="text-[9px] font-bold text-gray-400 uppercase leading-none">End</p>
+                      <p className="text-[9px] font-bold text-gray-400 uppercase leading-none">Delivery</p>
                       <p className="text-[11px] font-black text-gray-700">{trip.endDate || '--'}</p>
                     </div>
                   </div>
@@ -207,7 +207,10 @@ const AllTrips = () => {
                   <div className="flex items-center gap-2">
                     {trip.endDate && (
                       <span className="text-[10px] font-black bg-blue-50 text-blue-600 px-2 py-0.5 rounded-lg">
-                        {trip.endDate && trip.startDate ? `${Math.ceil((new Date(trip.endDate) - new Date(trip.startDate)) / (1000 * 60 * 60 * 24))} din` : 'N/A'}
+                        {trip.endDate && trip.startDate ? (() => {
+                          const diff = Math.ceil((new Date(trip.endDate) - new Date(trip.startDate)) / (1000 * 60 * 60 * 24));
+                          return `${diff} ${diff === 1 ? 'day' : 'days'}`;
+                        })() : 'N/A'}
                       </span>
                     )}
                     <ChevronRight size={18} className="text-gray-300" />
@@ -220,13 +223,13 @@ const AllTrips = () => {
           {!loading && trips.length === 0 && (
             <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-200 mt-6">
               <Truck size={48} className="mx-auto text-gray-200 mb-4" />
-              <p className="text-gray-400 font-medium">Abhi koi trips nahi hain.</p>
+              <p className="text-gray-400 font-medium">No loads found.</p>
             </div>
           )}
         </div>
         <div className="h-10 md:hidden" aria-hidden="true" />
       </div>
-        <MobileFooter activeTab="Trips" />
+        <MobileFooter activeTab="Loads" />
     </div>
   );
 };

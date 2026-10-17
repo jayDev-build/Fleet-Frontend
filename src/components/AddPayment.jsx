@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, IndianRupee, Calendar, Check, Notebook } from 'lucide-react';
+import { ArrowLeft, DollarSign, Calendar, Check, Notebook } from 'lucide-react';
 import api from '../service/api';
 import Sidebar from './Sidebar';
 import MobileFooter from './MobileFooter';
@@ -17,6 +17,13 @@ const AddPayment = () => {
     ownerId: ownerId
   });
 
+  const paymentMethods = [
+    { id: 'CASH', label: 'Cash' },
+    { id: 'UPI', label: 'Wire / Electronic' },
+    { id: 'BANK_TRANSFER', label: 'ACH / Direct Deposit' },
+    { id: 'CHEQUE', label: 'Check / Comcheck' },
+  ];
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -24,7 +31,7 @@ const AddPayment = () => {
       await api.post('/transactions/', formData);
       navigate(`/owner/balance-sheet/${ownerId}`);
     } catch (err) {
-      alert("Payment save nahi hui. Please try again.");
+      alert("Failed to record payment. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -37,10 +44,10 @@ const AddPayment = () => {
         <header className="bg-[#0f172a] text-white p-6 md:p-10 pb-24">
           <div className="max-w-3xl mx-auto">
             <button onClick={() => navigate(`/owner/balance-sheet/${ownerId}`)} className="flex items-center text-gray-400 text-xs mb-6 hover:text-white transition-colors">
-              <ArrowLeft size={14} className="mr-1" /> Wapas Jayein
+              <ArrowLeft size={14} className="mr-1" /> Back
             </button>
-            <h1 className="text-3xl font-black">Nayi Payment Add Karein</h1>
-            <p className="text-gray-400 mt-2">Owner ko di gayi payment yahan record karein.</p>
+            <h1 className="text-3xl font-black">Record Carrier Payment / Advance</h1>
+            <p className="text-gray-400 mt-2">Record an advance, fuel reimbursement, or settlement payment to the carrier.</p>
           </div>
         </header>
 
@@ -49,9 +56,9 @@ const AddPayment = () => {
             
             {/* Amount Field */}
             <div className="bg-emerald-50 p-8 rounded-3xl border border-emerald-100 text-center">
-              <label className="text-[10px] font-black text-emerald-600 uppercase mb-4 block tracking-widest">Amount Diya (₹)</label>
+              <label className="text-[10px] font-black text-emerald-600 uppercase mb-4 block tracking-widest">Payment Amount ($)</label>
               <div className="flex items-center justify-center text-5xl font-black text-emerald-700">
-                <span className="mr-2">₹</span>
+                <span className="mr-2">$</span>
                 <input 
                   type="number" required placeholder="0"
                   className="bg-transparent border-none focus:ring-0 w-full max-w-[200px] text-center"
@@ -63,16 +70,16 @@ const AddPayment = () => {
 
             {/* Payment Method Selector */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {['CASH', 'UPI', 'BANK_TRANSFER', 'CHEQUE'].map((m) => (
+              {paymentMethods.map((m) => (
                 <button
-                  key={m} type="button"
-                  onClick={() => setFormData({...formData, method: m})}
+                  key={m.id} type="button"
+                  onClick={() => setFormData({...formData, method: m.id})}
                   className={`py-4 rounded-2xl text-[10px] font-black tracking-tighter transition-all flex flex-col items-center gap-2 border-2 ${
-                    formData.method === m ? 'bg-[#0f172a] text-white border-[#0f172a]' : 'bg-gray-50 text-gray-400 border-gray-100'
+                    formData.method === m.id ? 'bg-[#0f172a] text-white border-[#0f172a]' : 'bg-gray-50 text-gray-400 border-gray-100'
                   }`}
                 >
-                  {formData.method === m && <Check size={14} />}
-                  {m.replace('_', ' ')}
+                  {formData.method === m.id && <Check size={14} />}
+                  {m.label}
                 </button>
               ))}
             </div>
@@ -91,11 +98,11 @@ const AddPayment = () => {
                 </div>
               </div>
               <div>
-                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1 mb-2 block">Remark / Note</label>
+                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1 mb-2 block">Remark / Description</label>
                 <div className="relative">
                   <Notebook className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                   <input 
-                    type="text" placeholder="e.g. Fuel advance"
+                    type="text" placeholder="e.g. Fuel advance / Comcheck #84102"
                     className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none font-bold"
                     value={formData.note}
                     onChange={(e) => setFormData({...formData, note: e.target.value})}
@@ -113,7 +120,7 @@ const AddPayment = () => {
             </button>
           </form>
         </main>
-        <MobileFooter />
+        <MobileFooter activeTab="Carriers" />
       </div>
     </div>
   );

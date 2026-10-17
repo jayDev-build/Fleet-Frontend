@@ -10,11 +10,11 @@ import {
 
 const sidebarItems = [
   { label: 'Dashboard', to: '/dashboard', icon: <LayoutDashboard size={20} /> },
-  { label: 'Trips', to: '/allTrips', icon: <Truck size={20} /> },
-  { label: 'Vehicles', to: '/allVehicles', icon: <Truck size={20} className="rotate-180" /> },
+  { label: 'Loads', to: '/allTrips', icon: <Truck size={20} /> },
+  { label: 'Trucks', to: '/allVehicles', icon: <Truck size={20} className="rotate-180" /> },
   { label: 'Drivers', to: '/allDrivers', icon: <Users size={20} /> },
-  { label: 'Owners', to: '/allOwners', icon: <UserSquare2 size={20} /> },
-  { label: 'Profile', to: '/profile', icon: <Settings size={20} /> },
+  { label: 'Carriers', to: '/allOwners', icon: <UserSquare2 size={20} /> },
+  { label: 'Settings', to: '/profile', icon: <Settings size={20} /> },
 ];
 
 const activeClass = 'bg-white/10 text-white border-l-4 border-orange-500 rounded-l-none';
@@ -24,7 +24,7 @@ const Sidebar = () => (
   <aside className="hidden md:flex w-64 bg-[#0f172a] flex-col text-gray-400">
     <div className="p-6">
       <h1 className="text-2xl font-black text-white tracking-tight">
-        Truck<span className="text-orange-500">Khata</span>
+        Truck<span className="text-orange-500">Dispatch</span>
       </h1>
     </div>
 

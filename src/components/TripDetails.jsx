@@ -51,27 +51,27 @@ const TripDetails = () => {
       await api.patch(`/trip/status/${id}/start`);
       fetchTripDetails(); 
     } catch (err) {
-      alert("Status update failed");
+      alert("Failed to update load status.");
     }
   };
 
-  const kharche = expenses.map(exp => {
+  const formattedExpenses = expenses.map(exp => {
     let config = { label: 'Other', icon: <Receipt className="text-gray-400" /> };
     if (exp.expenseType === 'DIESEL') config = { label: 'Fuel', icon: <Fuel className="text-red-500" /> };
-    else if (exp.expenseType === 'DRIVER') config = { label: 'Driver', icon: <User className="text-purple-500" /> };
-    else if (exp.expenseType === 'OTHER' || exp.expenseType === 'REPAIR') config = { label: 'Repair', icon: <Wrench className="text-pink-400" /> };
+    else if (exp.expenseType === 'DRIVER') config = { label: 'Driver Pay', icon: <User className="text-purple-500" /> };
+    else if (exp.expenseType === 'OTHER' || exp.expenseType === 'REPAIR') config = { label: 'Maintenance', icon: <Wrench className="text-pink-400" /> };
 
     return {
       id: exp.id,
       type: config.label,
       note: exp.note,
-      date: new Date(exp.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }),
+      date: new Date(exp.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short' }),
       amount: exp.amount,
       icon: config.icon
     };
   });
 
-  if (loading) return <div className="h-screen flex items-center justify-center font-bold text-gray-400 italic">Loading Trip...</div>;
+  if (loading) return <div className="h-screen flex items-center justify-center font-bold text-gray-400 italic">Loading Load Details...</div>;
 
   return (
     <div className="min-h-screen bg-[#f1f5f9] flex flex-col md:flex-row">
@@ -83,7 +83,7 @@ const TripDetails = () => {
           <div className="flex justify-between items-start md:items-center">
             <div>
               <button onClick={() => navigate("/alltrips")} className="flex items-center text-gray-500 text-sm mb-1 hover:text-gray-800 transition-colors">
-                <ArrowLeft size={16} className="mr-1" /> Wapas / #{trip.id}
+                <ArrowLeft size={16} className="mr-1" /> Back / Load #{trip.id}
               </button>
               <div className="flex items-center gap-3">
                 <h2 className="text-xl md:text-3xl font-bold text-gray-900">{trip.source} → {trip.destination}</h2>
@@ -97,8 +97,8 @@ const TripDetails = () => {
                 <span className="flex items-center gap-1 font-medium"><User size={14}/> {trip.driverName}</span>
               </div>
               <div className="flex flex-row gap-2 mt-2 text-gray-500 text-sm md:hidden">
-                <span className="flex items-center gap-1 font-medium">Start: {trip.startDate || 'N/A'}</span>
-                <span className="flex items-center gap-1 font-medium">End: {trip.endDate || 'N/A'}</span>
+                <span className="flex items-center gap-1 font-medium">Pickup: {trip.startDate || 'N/A'}</span>
+                <span className="flex items-center gap-1 font-medium">Delivery: {trip.endDate || 'N/A'}</span>
               </div>
             </div>
 
@@ -106,17 +106,17 @@ const TripDetails = () => {
             {trip.status === 'ACTIVE' && (
               <div className="hidden md:flex gap-3">
                 <button className="bg-white border border-gray-200 px-4 py-2 rounded-lg font-bold text-gray-600 hover:bg-gray-50 transition-all shadow-sm" onClick={() => handleAddExpense(tripId)}>
-                  + Kharcha Add Karo
+                  + Log Expense
                 </button> 
                 <button className="bg-green-600 text-white px-6 py-2 rounded-xl font-black flex items-center justify-center gap-2 shadow-xl active:scale-95 transition-all" onClick={() => handleCompleteTrip(tripId)}>
-                  <CheckCircle2 size={18} /> Trip Khatam Karo 
+                  <CheckCircle2 size={18} /> Mark Delivered 
                 </button>
               </div>
             )}
             {trip.status === 'CREATED' && (
               <div className="hidden md:flex gap-1">
                 <button className="bg-green-600 text-white px-6 py-2 rounded-xl font-black flex items-center justify-center gap-2 shadow-xl active:scale-95 transition-all" onClick={() => handleStartTrip(tripId)}>
-                  <CheckCircle2 size={18} /> Trip Shuru Karo 
+                  <CheckCircle2 size={18} /> Dispatch Load 
                 </button>
               </div>
             )}
@@ -124,42 +124,42 @@ const TripDetails = () => {
         </header>
 
         <div className="px-4 md:px-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* HISAAB KITAAB CARD */}
+          {/* SETTLEMENT CARD */}
           <div className="lg:col-span-1 space-y-6">
             <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-              <div className="bg-[#1e293b] text-white p-4 text-[10px] font-black uppercase tracking-[0.2em]">Hisaab Kitaab</div>
+              <div className="bg-[#1e293b] text-white p-4 text-[10px] font-black uppercase tracking-[0.2em]">Settlement Breakdown</div>
               <div className="p-6 space-y-4">
-                <HisaabRow label="Maal ka Kiraya" amount={trip.freightPrice} />
-                <HisaabRow label="Truck Bhada" amount={-trip.ownerRate} isNegative />
-                <HisaabRow label="Kul Kharcha" amount={-trip.totalExpense} isNegative />
+                <SettlementRow label="Shipper Freight Rate" amount={trip.freightPrice} />
+                <SettlementRow label="Carrier Pay" amount={-trip.ownerRate} isNegative />
+                <SettlementRow label="Total Trip Expenses" amount={-trip.totalExpense} isNegative />
                 <hr className="border-dashed border-gray-100" />
                 <div className="flex justify-between items-center pt-2">
-                  <span className="font-bold text-gray-800">Net Faida</span>
-                  <span className="text-3xl font-black text-green-600">₹{trip.profit?.toLocaleString('en-IN') || 0}</span>
+                  <span className="font-bold text-gray-800">Net Profit</span>
+                  <span className="text-3xl font-black text-green-600">${(trip.profit || 0).toLocaleString('en-US')}</span>
                 </div>
               </div>
             </div>
 
             {/* TRIP INFO (Desktop Only) */}
             <div className="hidden md:block bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
-              <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4">Trip Details</h3>
+              <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4">Load Details</h3>
               <div className="space-y-3">
-                <InfoRow label="Truck" value={trip.vehicleNumber} />
+                <InfoRow label="Truck / Unit" value={trip.vehicleNumber} />
                 <InfoRow label="Driver" value={trip.driverName} />
-                <InfoRow label="Start Date" value={trip.startDate} />
-                <InfoRow label="End Date" value={trip.endDate} />
+                <InfoRow label="Pickup Date" value={trip.startDate} />
+                <InfoRow label="Delivery Date" value={trip.endDate} />
               </div>
             </div>
           </div>
 
-          {/* KHARCHE LIST CARD */}
+          {/* EXPENSES LIST CARD */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-3xl shadow-sm border border-gray-100 min-h-[400px] overflow-hidden">
               <div className="p-6 flex justify-between items-center border-b border-gray-50">
-                <h3 className="font-black text-gray-900 text-lg uppercase tracking-tight">Kharche ki List</h3>
+                <h3 className="font-black text-gray-900 text-lg uppercase tracking-tight">Trip Expenses</h3>
                 {trip.status === 'ACTIVE' && (
                   <button className="bg-[#0f172a] text-white text-[10px] font-black uppercase px-3 py-2 rounded-lg" onClick={() => handleAddExpense(tripId)}>
-                    + Add
+                    + Log Expense
                   </button>
                 )}
               </div>
@@ -174,7 +174,7 @@ const TripDetails = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-50">
-                    {kharche.map((item) => {
+                    {formattedExpenses.map((item) => {
                       const isExpanded = expandedId === item.id;
                       return (
                         <React.Fragment key={item.id}>
@@ -196,7 +196,7 @@ const TripDetails = () => {
                             </td>
 
                             <td className="px-4 md:px-6 py-4 text-right">
-                              <p className="font-black text-gray-900 text-sm md:text-base">₹{item.amount.toLocaleString('en-IN')}</p>
+                              <p className="font-black text-gray-900 text-sm md:text-base">${(item.amount || 0).toLocaleString('en-US')}</p>
                             </td>
 
                             <td className="px-4 md:px-6 py-4 text-right">
@@ -233,7 +233,7 @@ const TripDetails = () => {
                                         }}
                                         className="px-3.5 py-1.5 bg-[#0f172a] text-white text-[10px] font-black uppercase tracking-wider rounded-lg hover:bg-blue-600 transition-colors shadow-sm active:scale-95"
                                       >
-                                        Edit Kharcha
+                                        Edit Expense
                                       </button>
                                     )}
                                   </div>
@@ -245,7 +245,7 @@ const TripDetails = () => {
                       );
                     })}
                     
-                    {kharche.length === 0 && (
+                    {formattedExpenses.length === 0 && (
                       <tr>
                         <td colSpan={3} className="text-center py-20 text-gray-400 font-bold italic">
                           No expenses added.
@@ -257,8 +257,8 @@ const TripDetails = () => {
               </div>
               
               <div className="p-6 border-t border-gray-50 flex justify-between items-center bg-gray-50/30">
-                <span className="font-black text-gray-400 uppercase text-xs tracking-widest">Kul Kharcha</span>
-                <span className="text-2xl font-black text-red-500">₹{trip.totalExpense?.toLocaleString('en-IN') || 0}</span>
+                <span className="font-black text-gray-400 uppercase text-xs tracking-widest">Total Expenses</span>
+                <span className="text-2xl font-black text-red-500">${(trip.totalExpense || 0).toLocaleString('en-US')}</span>
               </div>
             </div>
           </div>
@@ -267,7 +267,7 @@ const TripDetails = () => {
           {trip.status === 'CREATED' && (
             <div className="flex flex-row gap-2 w-full mt-6 md:hidden">
               <button className="w-full bg-green-600 text-white py-4 rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-xl active:scale-95" onClick={() => handleStartTrip(tripId)}>
-                Trip Shuru Karo
+                Dispatch Load
               </button> 
             </div>
           )}
@@ -275,26 +275,26 @@ const TripDetails = () => {
           {trip.status === 'ACTIVE' && (
             <div className="flex flex-row gap-2 w-full mt-6 md:hidden">
               <button className="w-1/2 bg-white border border-gray-200 py-4 rounded-2xl font-black text-gray-600 flex items-center justify-center gap-2 shadow-sm" onClick={() => handleAddExpense(tripId)}>
-                + Kharcha Add Karo
+                + Log Expense
               </button> 
               <button className="w-1/2 bg-green-600 text-white px-1 py-4 rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-xl active:scale-95" onClick={() => handleCompleteTrip(tripId)}>
-                <CheckCircle2 size={20} /> Trip Khatam Karo
+                <CheckCircle2 size={20} /> Mark Delivered
               </button>
             </div>
           )}
         </div>
       </main>
 
-      <MobileFooter activeTab="Trips" tripId={tripId} status={trip.status} />
+      <MobileFooter activeTab="Loads" tripId={tripId} status={trip.status} />
     </div>
   );
 };
 
-const HisaabRow = ({ label, amount, isNegative }) => (
+const SettlementRow = ({ label, amount, isNegative }) => (
   <div className="flex justify-between items-center text-sm">
     <span className="text-gray-500 font-medium">{label}</span>
     <span className={`font-bold ${isNegative ? 'text-red-500' : 'text-gray-800'}`}>
-      {isNegative ? '-' : ''}₹{Math.abs(amount || 0).toLocaleString('en-IN')}
+      {isNegative ? '-' : ''}${Math.abs(amount || 0).toLocaleString('en-US')}
     </span>
   </div>
 );

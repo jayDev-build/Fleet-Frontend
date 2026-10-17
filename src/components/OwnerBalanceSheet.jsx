@@ -35,11 +35,11 @@ const OwnerBalanceSheet = () => {
   }, [fetchOwnerBalanceSheet]);
 
   const sendWhatsApp = () => {
-    const message = `Namaste ${owner.ownerName} ji 🙏\n\nSummary:\nTotal Freight: ₹${owner.totalPay?.toLocaleString('en-IN')}\nTotal Paid: ₹${owner.totalAdvance?.toLocaleString('en-IN')}\nNet Balance: ₹${owner.amountToPay?.toLocaleString('en-IN')}\n\n— Shri Ram Movers`;
+    const message = `Hello ${owner.ownerName},\n\nCarrier Settlement Summary:\nTotal Carrier Pay: $${owner.totalPay?.toLocaleString('en-US')}\nTotal Paid / Advances: $${owner.totalAdvance?.toLocaleString('en-US')}\nNet Balance Due: $${owner.amountToPay?.toLocaleString('en-US')}\n\n— Apex Dispatch & Logistics`;
     window.open(`https://wa.me/${owner.ownerPhone}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
-  if (loading || !owner) return <div className="p-10 text-center font-bold text-gray-500">Loading Hisaab Kitaab...</div>;
+  if (loading || !owner) return <div className="p-10 text-center font-bold text-gray-500">Loading Settlement Statement...</div>;
 
   return (
     <div className="flex min-h-screen bg-[#f8fafc]">
@@ -49,7 +49,7 @@ const OwnerBalanceSheet = () => {
         <header className="bg-[#0f172a] text-white p-6 md:p-10 pb-20">
           <div className="max-w-7xl mx-auto">
             <button onClick={() => navigate(-1)} className="flex items-center text-gray-400 text-xs mb-6 hover:text-white transition-colors">
-              <ArrowLeft size={14} className="mr-1" /> Back to Owners
+              <ArrowLeft size={14} className="mr-1" /> Back to Carriers
             </button>
             
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -57,7 +57,7 @@ const OwnerBalanceSheet = () => {
                 <h1 className="text-3xl md:text-5xl font-black tracking-tight">{owner.ownerName}</h1>
                 <div className="flex flex-wrap items-center gap-4 mt-3 text-gray-400 text-sm font-bold my-3">
                   <span className="flex items-center gap-1.5 bg-white/5 px-3 py-1 rounded-lg border border-white/10"><Phone size={14} className="text-emerald-500"/> {owner.ownerPhone}</span>
-                  <span className="flex items-center gap-1.5 bg-white/5 px-3 py-1 rounded-lg border border-white/10"><Truck size={14} className="text-blue-500"/> {trips.length} Trips</span>
+                  <span className="flex items-center gap-1.5 bg-white/5 px-3 py-1 rounded-lg border border-white/10"><Truck size={14} className="text-blue-500"/> {trips.length} Loads</span>
                 </div>
               </div>
               <div className="flex gap-3 w-full md:w-auto">
@@ -65,7 +65,7 @@ const OwnerBalanceSheet = () => {
                   className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-white text-[#0f172a] px-6 py-3.5 rounded-2xl font-black shadow-xl hover:bg-gray-100 transition-all active:scale-95"
                   onClick={() => navigate(`/owner/${ownerId}/add-payment`)}
                 >
-                  <Plus size={20} /> Add Payment
+                  <Plus size={20} /> Record Payment / Advance
                 </button>
                 {/* <button onClick={sendWhatsApp} className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-3.5 rounded-2xl font-black shadow-xl transition-all active:scale-95">
                   <MessageCircle size={20} /> WhatsApp
@@ -77,22 +77,22 @@ const OwnerBalanceSheet = () => {
 
         <main className="max-w-7xl w-full mx-auto px-4 md:px-8 -mt-12 space-y-6 flex-1">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <SummaryCard title="Total Freight" amount={owner.totalRent} label="Gross Earnings" color="emerald" />
-            <SummaryCard title="Advance Given" amount={owner.totalPaid} label="Paid to Owner" color="emerald-solid" />
-            <SummaryCard title="Net Payable" amount={owner.amountToPay} label="Final Settlement" color="red" />
+            <SummaryCard title="Total Carrier Pay" amount={owner.totalRent} label="Gross Pay" color="emerald" />
+            <SummaryCard title="Advances & Paid" amount={owner.totalPaid} label="Disbursed" color="emerald-solid" />
+            <SummaryCard title="Net Balance Due" amount={owner.amountToPay} label="Outstanding Balance" color="red" />
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-10">
             {/* Left Column: Trips */}
             <div className="bg-white rounded-3xl shadow-sm border border-gray-300 overflow-hidden flex flex-col">
-              <SectionHeader icon={<Calculator size={18}/>} title="Trip-wise Breakdown" />
+              <SectionHeader icon={<Calculator size={18}/>} title="Load Breakdown" />
               <div className="overflow-x-auto">
                 <table className="w-full text-left">
                   <thead className="bg-gray-50/80 text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
                     <tr>
                       <th className="px-6 py-4">Route</th>
-                      <th className="px-6 py-4">Vehicle</th>
-                      <th className="px-6 py-4 text-right">Freight</th>
+                      <th className="px-6 py-4">Unit / Truck</th>
+                      <th className="px-6 py-4 text-right">Carrier Pay</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-50">
@@ -105,7 +105,7 @@ const OwnerBalanceSheet = () => {
                         <td className="px-6 py-4">
                           <span className="bg-gray-100 px-2 py-0.5 rounded text-[10px] font-black text-gray-600">{trip.vehicleNumber}</span>
                         </td>
-                        <td className="px-6 py-4 text-right font-bold text-gray-900 text-sm">₹{trip.rate?.toLocaleString('en-IN')}</td>
+                        <td className="px-6 py-4 text-right font-bold text-gray-900 text-sm">${(trip.rate || 0).toLocaleString('en-US')}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -115,7 +115,7 @@ const OwnerBalanceSheet = () => {
 
             {/* Right Column: Transactions */}
             <div className="bg-white rounded-3xl shadow-sm border border-gray-300 overflow-hidden flex flex-col">
-              <SectionHeader icon={<History size={18}/>} title="Payment History" />
+              <SectionHeader icon={<History size={18}/>} title="Disbursement & Payment History" />
               <div className="overflow-x-auto">
                 <table className="w-full text-left">
                   <thead className="bg-gray-50/80 text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
@@ -132,11 +132,11 @@ const OwnerBalanceSheet = () => {
                           <p className="font-black text-gray-800 text-sm">{tx.date}</p>
                           <p className="text-[10px] text-gray-400 font-bold uppercase">{tx.method}</p>
                         </td>
-                        <td className="px-6 py-4 text-xs text-gray-500 font-medium italic">{tx.note || 'Freight Advance'}</td>
-                        <td className="px-6 py-4 text-right font-bold text-red-500 text-sm">- ₹{tx.amount?.toLocaleString('en-IN')}</td>
+                        <td className="px-6 py-4 text-xs text-gray-500 font-medium italic">{tx.note || 'Carrier Advance'}</td>
+                        <td className="px-6 py-4 text-right font-bold text-red-500 text-sm">- ${(tx.amount || 0).toLocaleString('en-US')}</td>
                       </tr>
                     )) : (
-                      <tr><td colSpan="3" className="px-6 py-10 text-center text-gray-400 text-sm font-bold italic">No payments recorded.</td></tr>
+                      <tr><td colSpan="3" className="px-6 py-10 text-center text-gray-400 text-sm font-bold italic">No payments or advances recorded.</td></tr>
                     )}
                   </tbody>
                 </table>
@@ -144,7 +144,7 @@ const OwnerBalanceSheet = () => {
             </div>
           </div>
         </main>
-        <MobileFooter />
+        <MobileFooter activeTab="Carriers" />
       </div>
     </div>
   );
@@ -159,7 +159,7 @@ const SummaryCard = ({ title, amount, label, color }) => {
   return (
     <div className={`p-6 rounded-3xl shadow-sm border ${styles[color]}`}>
       <p className={`text-[10px] font-black uppercase tracking-[0.2em] mb-4 ${color.includes('solid') ? 'text-white/70' : 'text-gray-400'}`}>{title}</p>
-      <h3 className={`text-2xl font-black ${color === 'red' ? 'text-red-500' : ''}`}>₹{amount?.toLocaleString('en-IN')}</h3>
+      <h3 className={`text-2xl font-black ${color === 'red' ? 'text-red-500' : ''}`}>${(amount || 0).toLocaleString('en-US')}</h3>
       <div className={`mt-2 text-[10px] font-black w-fit px-2 py-0.5 rounded uppercase flex items-center gap-1 ${color.includes('solid') ? 'bg-white/20 text-white' : color === 'red' ? 'bg-red-50 text-red-600' : 'bg-emerald-50 text-emerald-600'}`}>
         {color.includes('solid') && <CheckCircle2 size={10}/>} {label}
       </div>

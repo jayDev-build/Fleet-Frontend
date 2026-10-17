@@ -1,29 +1,29 @@
-# 🚚 TruckKhata (Fleet Management System) — Frontend
+# 🚚 TruckDispatch (Fleet & Load Management System) — Frontend
 
-Welcome to the frontend application for **TruckKhata**, a modern, responsive fleet and transport management Single Page Application (SPA). Built using **React 19**, **Vite**, and **Tailwind CSS**, this interface empowers fleet operators and managers to seamlessly monitor real-time transport logs, coordinate drivers and trucks, log trip-related expenses, and manage financial settlements with third-party vehicle owners.
+Welcome to the frontend application for **TruckDispatch**, a modern, responsive fleet dispatch and carrier management Single Page Application (SPA). Built using **React 19**, **Vite**, and **Tailwind CSS**, this interface empowers US dispatchers and fleet managers to seamlessly monitor real-time dispatches, coordinate drivers and power units, log trip-related expenses, and manage settlements and disbursements with carriers and owner-operators.
 
-Designed with a sleek, mobile-first dashboard and a premium dark-themed navigation system, TruckKhata brings intuitive logistics tracking to desktop and mobile devices.
+Designed with a sleek, mobile-first dashboard and a premium dark-themed navigation system, TruckDispatch brings intuitive logistics tracking to desktop and mobile devices.
 
 ---
 
 ## 🌟 Key Features
 
-TruckKhata Frontend delivers an interactive user experience with the following core modules:
+TruckDispatch Frontend delivers an interactive user experience with the following core modules:
 
 *   **📊 Unified Financial Dashboard:**
-    *   **At-a-Glance Metrics:** Track total trips, active trips, total freight earnings, completed trip profits (booked profit), and ongoing trip profits (estimated profit).
-    *   **Recent Trips Ledger:** Quick preview table (desktop) or card list (mobile) showing recent trips with direct access to details.
-*   **🛣️ Trip Lifecycle Management:**
-    *   Create new trips specifying drivers, vehicles, source, destination, freight price, owner rate, and start date.
-    *   Manage active trips and close them (mark as completed) to settle balances.
-    *   Detailed view showing trip status timelines, mapped assets, and custom financial breakdowns.
+    *   **At-a-Glance Metrics:** Track total loads, active loads, gross freight revenue, delivered load profits (booked profit), and ongoing load profits (estimated profit).
+    *   **Recent Loads Ledger:** Quick preview table (desktop) or card list (mobile) showing recent loads with direct access to load details.
+*   **🛣️ Load Lifecycle & Dispatch Management:**
+    *   Create new load dispatches specifying drivers, power units, origin, destination, shipper rate, carrier pay, and pickup/delivery dates.
+    *   Manage active loads, dispatch them in-transit, and mark as delivered to settle carrier balances.
+    *   Detailed view showing status timelines, mapped assets, and custom financial breakdowns.
 *   **💸 Expense Bookkeeping:**
-    *   Log trip expenses instantly under standard categories: **Diesel**, **Toll**, **Driver Allowance**, and **Other**.
+    *   Log trip expenses instantly under standard categories: **Fuel**, **Tolls**, **Driver Pay**, and **Maintenance / Other**.
     *   Edit existing expense parameters or delete incorrect logs.
-*   **🚛 Vehicle & Owner Ledgers:**
-    *   **Asset Management:** Track registered vehicles and active drivers.
-    *   **Owner Balance Sheets:** Double-entry ledger screens for third-party vehicle owners. Monitor total rental dues, advances, payouts, and net outstanding balances.
-    *   Record new advances or custom payments with specific transaction dates and descriptions.
+*   **🚛 Power Units & Carrier Ledgers:**
+    *   **Asset Management:** Track registered trucks, power units, and active drivers.
+    *   **Carrier Balance Sheets & Settlements:** Statement ledger screens for carriers and owner-operators. Monitor gross carrier pay, advances, payouts, and net outstanding balances.
+    *   Record new advances, disbursements, or settlement payments with specific transaction dates and notes.
 *   **🔐 JWT Session & Security Interceptors:**
     *   Auto-attaches user JWT authentication tokens from cookies to outgoing API requests.
     *   Handles session expirations (401 Unauthorized status) gracefully by routing users back to the secure login window.
